@@ -26,7 +26,7 @@ class SmallTrainSet:
             9: {'raw_count': 0, 'proportion': 0, 'scaled_count': 0, 'sample_counter': 0},
             10: {'raw_count': 0, 'proportion': 0, 'scaled_count': 0, 'sample_counter': 0}
         }
-        
+
         self.total_count = 0
         self.sample_list = self.sample_training_set()
 
