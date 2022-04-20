@@ -7,6 +7,7 @@ class SmallTrainSet:
         self.dataset_size = dataset_size
         self.path = path
 
+        # Load JSON file data
         file = open(path, 'rb')
         self.metadata = json.load(file)
         file.close()
@@ -25,9 +26,8 @@ class SmallTrainSet:
             9: {'raw_count': 0, 'proportion': 0, 'scaled_count': 0, 'sample_counter': 0},
             10: {'raw_count': 0, 'proportion': 0, 'scaled_count': 0, 'sample_counter': 0}
         }
-
+        
         self.total_count = 0
-
         self.sample_list = self.sample_training_set()
 
     def sample_training_set(self):
@@ -42,9 +42,11 @@ class SmallTrainSet:
         self.family_info[9]['raw_count'] = 0
         self.family_info[9]['proportion'] = 0
 
+        # Calculate relative frequency of each instrument family
         for inner_key in self.family_info.values():
             inner_key['proportion'] += inner_key['raw_count'] / self.total_count
 
+        # Calculate the number of samples to gather for each family based on desired dataset size
         for inner_key in self.family_info.values():
             inner_key['scaled_count'] += (inner_key['proportion'] * self.dataset_size) // 1
 
@@ -55,9 +57,9 @@ class SmallTrainSet:
 
         sample_list = []
         for key in self.metadata.keys():
-            # check instrument family
+            # set instrument family
             sample = self.family_info[self.metadata[key]['instrument_family']]
-            # if counter for instrument family is below the max value
+            # if counter for instrument family is below the max value, store the sample name
             if sample['sample_counter'] < sample['scaled_count']:
                 # store sample name
                 sample_list.append(f'{key}.wav')
