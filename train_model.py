@@ -41,8 +41,8 @@ def main():
 
     # Test dataloader function
     img = next(iter(tng_dataloader))
-    plt.imshow(img)
-    plt.show()
+    # plt.imshow(img)
+    # plt.show()
     # print(f'label:{label}\nimg:\n{img}')
     print(f'img:\n{img}')
 
