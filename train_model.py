@@ -14,7 +14,7 @@ def main():
     parser.add_argument('--val_folder', type=str, default='small_audio/')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--lr', type=float, default=.01)
-    parser.add_argument('--num_epochs', type=int, default=50)
+    parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--status_interval', type=int, default=1)
     args = parser.parse_args()
 
@@ -41,9 +41,6 @@ def main():
     tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=False)
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
-    # for batch in tng_dataloader:
-    #     print(f'label ({label.shape}):{label}\nimg ({batch["img"].shape}):\n{batch["img"]}')
-
     # Load model
     net = BasicCNN().to(device)
 
@@ -65,12 +62,15 @@ def main():
         # Training Loop
         net.train()
         n = 0
+        print(f'\n*** TRAINING LOOP ***\n')
         for (img_batch, label_batch) in tng_dataloader:
             optimizer.zero_grad()
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
+            print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
             predicted_labels = net(img_batch)
+            print(f'predicted_labels: {predicted_labels}')
 
             tng_loss = loss(predicted_labels, label_batch)
             tng_loss.backward()
@@ -79,21 +79,27 @@ def main():
             epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch).sum().detach.item()
             n += len(label_batch)
 
+        print(f'\nn = {n}')
         epoch_tng_loss /= len(tng_dataloader)
         epoch_tng_score /= n
 
         # Validation Loop
+        print(f'\n*** VALIDATION LOOP ***\n')
         with torch.no_grad():
             net.eval()
             n = 0
             for (img_batch, label_batch) in val_dataloader:
                 img_batch = img_batch.to(device)
                 label_batch = label_batch.to(device)
+                print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
                 predicted_labels = net(img_batch)
+                print(f'predicted_labels: {predicted_labels}')
 
                 epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch).sum().item()
                 n += len(label_batch)
+
+            print(f'\nn = {n}')
             epoch_val_score /= n
 
         if epoch % args.status_interval == 0:
