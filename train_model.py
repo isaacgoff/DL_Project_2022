@@ -33,7 +33,7 @@ def main():
     start = datetime.now()
     # Create datasets
     tng_dataset = create_dataset(audio_input_path_tng, json_path_tng)
-    val_dataset = create_dataset(audio_input_path_val, json_path_val)
+    # val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
     # Create Data Loaders
     tng_dataloader = DataLoader(tng_dataset, batch_size=1, shuffle=False)
