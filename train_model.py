@@ -72,7 +72,7 @@ def main():
         print(f'\n*** TRAINING LOOP ***\n')
         for (img_batch, label_batch) in tng_dataloader:
             print(img_batch.shape)
-            exit(0)
+            
             optimizer.zero_grad()
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
