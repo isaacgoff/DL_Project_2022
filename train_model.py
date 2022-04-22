@@ -43,7 +43,7 @@ def main():
     sample = next(iter(tng_dataloader))
     # plt.imshow(img)
     # plt.show()
-    print(f'label:{sample["label"]}\nimg:\n{sample["img"]}')
+    print(f'label ({sample["label"].shape}):{sample["label"]}\nimg ({sample["img"].shape}):\n{sample["img"]}')
     # print(f'img:\n{img}')
 
     end = datetime.now()
