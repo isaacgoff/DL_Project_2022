@@ -12,7 +12,7 @@ def main():
     parser.add_argument('-f')  # Required for argument parser to work in Colab
     parser.add_argument('--train_folder', type=str, default='small_audio/')
     parser.add_argument('--val_folder', type=str, default='small_audio/')
-    parser.add_argument('--batch_size', type=int, default=128)
+    parser.add_argument('--batch_size', type=int, default=2)
     parser.add_argument('--lr', type=float, default=.01)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--status_interval', type=int, default=1)
@@ -76,6 +76,8 @@ def main():
             label_batch = label_batch.to(device)
             print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
+            img_batch = img_batch.reshape(1, img_batch.shape[0], img_batch.shape[1], img_batch.shape[2])
+            print(f'img_batch shape: {img_batch.shape}')
             predicted_labels = net(img_batch)
             print(f'predicted_labels: {predicted_labels}')
 
