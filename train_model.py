@@ -40,11 +40,11 @@ def main():
     # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
     # Test dataloader function
-    img = next(iter(tng_dataloader))
+    img, label = next(iter(tng_dataloader))
     # plt.imshow(img)
     # plt.show()
-    # print(f'label:{label}\nimg:\n{img}')
-    print(f'img:\n{img}')
+    print(f'label:{label}\nimg:\n{img}')
+    # print(f'img:\n{img}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')

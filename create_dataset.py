@@ -43,5 +43,5 @@ class AudioSpectogramDataset(Dataset):
         return self.data.shape[0]
 
     def __getitem__(self, index):
-        return self.data[index]
-        # return self.data[index], self.label[index]
+        # return self.data[index]
+        return self.data[index], self.label[index]
