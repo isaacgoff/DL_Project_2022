@@ -29,7 +29,7 @@ def create_dataset(audio_input_path, json_path):
         data.append(S_dB)
 
     data_np = torch.tensor(np.stack(data))
-    labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=10)
+    labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11)
     return AudioSpectogramDataset(data_np, labels)
 
 
