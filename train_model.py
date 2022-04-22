@@ -36,15 +36,15 @@ def main():
     # val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
     # Create Data Loaders
-    tng_dataloader = DataLoader(tng_dataset, batch_size=1, shuffle=False)
+    tng_dataloader = DataLoader(tng_dataset, batch_size=2, shuffle=False)
     # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
     # Test dataloader function
     # sample = next(iter(tng_dataloader))
     # plt.imshow(img)
     # plt.show()
-    for sample in tng_dataloader:
-        print(f'label ({sample["label"].shape}):{sample["label"]}\nimg ({sample["img"].shape}):\n{sample["img"]}')
+    for batch in tng_dataloader:
+        print(f'label ({batch["label"].shape}):{batch["label"]}\nimg ({batch["img"].shape}):\n{batch["img"]}')
     # print(f'img:\n{img}')
 
     end = datetime.now()
