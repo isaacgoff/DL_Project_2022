@@ -3,6 +3,7 @@ import os
 import torch
 import librosa
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
@@ -39,7 +40,10 @@ def main():
     # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
     # Test dataloader function
-
+    img, label = next(iter(tng_dataloader))
+    plt.imshow(img)
+    plt.show()
+    print(f'label:{label}\nimg:\n{img}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
