@@ -40,7 +40,7 @@ def main():
     # Create Data Loaders
     tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=False)
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
-    print(next(iter(tng_dataloader)).shape)
+
     # Load model
     net = BasicCNN().to(device)
 
@@ -53,10 +53,10 @@ def main():
     optimizer = torch.optim.SGD(net.parameters(), lr=args.lr)
     loss = nn.CrossEntropyLoss()
 
-    X = torch.rand(size=(1, 1, 128, 128))
-    for layer in net:
-        X = layer(X)
-        print(layer.__class__.__name__, 'output shape:\t', X.shape)
+    # X = torch.rand(size=(1, 1, 128, 128))
+    # for layer in net:
+    #     X = layer(X)
+    #     print(layer.__class__.__name__, 'output shape:\t', X.shape)
 
     exit(0)
 
@@ -71,6 +71,8 @@ def main():
         n = 0
         print(f'\n*** TRAINING LOOP ***\n')
         for (img_batch, label_batch) in tng_dataloader:
+            print(img_batch.shape)
+            exit(0)
             optimizer.zero_grad()
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
