@@ -76,7 +76,7 @@ def main():
             label_batch = label_batch.to(device)
             print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
-            img_batch = img_batch.reshape(1, img_batch.shape[0], img_batch.shape[1], img_batch.shape[2])
+            img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
             print(f'img_batch shape: {img_batch.shape}')
             predicted_labels = net(img_batch)
             print(f'predicted_labels: {predicted_labels}')
