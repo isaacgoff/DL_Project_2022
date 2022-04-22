@@ -35,9 +35,10 @@ def create_dataset(audio_input_path, json_path):
 
 
 class AudioSpectogramDataset(Dataset):
-    def __init__(self, data, labels):
+    def __init__(self, data, labels, transform=None):
         self.data = data
         self.labels = labels
+        self.transform = transform
 
     def __len__(self):
         return self.data.shape[0]
