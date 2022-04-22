@@ -31,7 +31,7 @@ def create_dataset(audio_input_path, json_path):
     data_np = torch.tensor(np.stack(data))
     labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11)
     print(f'data_np ({data_np.shape}):\n{data_np}\nlabels ({labels.shape}):\n{labels}')
-    print(f'first label: {labels[0]}')
+    # print(f'first label: {labels[0]}')
     return AudioSpectogramDataset(data_np, labels)
 
 
@@ -44,6 +44,6 @@ class AudioSpectogramDataset(Dataset):
         return self.data.shape[0]
 
     def __getitem__(self, index):
-        print(f'index sent: {index}')
+        # print(f'\nrequested label: {self.labels[index]}')
         # return self.data[index]
-        return {'img': self.data[index], 'label': self.label[index]}
+        return {'img': self.data[index], 'label': self.labels[index]}
