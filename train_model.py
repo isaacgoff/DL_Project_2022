@@ -40,10 +40,10 @@ def main():
     # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
     # Test dataloader function
-    img, label = next(iter(tng_dataloader))
+    sample = next(iter(tng_dataloader))
     # plt.imshow(img)
     # plt.show()
-    print(f'label:{label}\nimg:\n{img}')
+    print(f'label:{sample["label"]}\nimg:\n{sample["img"]}')
     # print(f'img:\n{img}')
 
     end = datetime.now()
