@@ -58,8 +58,6 @@ def main():
     #     X = layer(X)
     #     print(layer.__class__.__name__, 'output shape:\t', X.shape)
 
-    exit(0)
-
     epoch = 0
     for epoch in range(args.num_epochs):
         epoch_tng_loss = 0
