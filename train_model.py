@@ -4,6 +4,7 @@ import torch
 import librosa
 import numpy as np
 from datetime import datetime
+from torch.utils.data import DataLoader
 from create_dataset import create_dataset
 
 
@@ -32,6 +33,12 @@ def main():
     # Create datasets
     tng_dataset = create_dataset(audio_input_path_tng, json_path_tng)
     val_dataset = create_dataset(audio_input_path_val, json_path_val)
+
+    # Create Data Loaders
+    tng_dataloader = DataLoader(tng_dataset, batch_size=1, shuffle=False)
+    # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
+
+    # Test dataloader function
 
 
     end = datetime.now()

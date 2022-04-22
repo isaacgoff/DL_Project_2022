@@ -3,7 +3,8 @@ import torch
 import librosa
 import numpy as np
 import json
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
+import torch.nn.functional as F
 
 
 def create_dataset(audio_input_path, json_path):
@@ -27,16 +28,18 @@ def create_dataset(audio_input_path, json_path):
         S_dB = librosa.power_to_db(spectrogram, ref=np.max)
         data.append(S_dB)
 
-    data_np = np.stack(data)
-    return AudioSpectogramDataset(data_np)
+    data_np = torch.tensor(np.stack(data))
+    labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=10)
+    return AudioSpectogramDataset(data_np, labels)
 
 
 class AudioSpectogramDataset(Dataset):
-    def __init__(self, data):
+    def __init__(self, data, labels):
         self.data = data
+        self.labels = labels
 
     def __len__(self):
         return len(self.data.shape[0])
 
     def __getitem__(self, index):
-
+        return self.data[index], self.label[index]
