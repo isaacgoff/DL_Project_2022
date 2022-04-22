@@ -1,9 +1,5 @@
 import argparse
-import os
 import torch
-import librosa
-import numpy as np
-import matplotlib.pyplot as plt
 from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
@@ -13,7 +9,7 @@ def main():
     parser = argparse.ArgumentParser(description='Train the individual Transformer model')
     parser.add_argument('-f')  # Required for argument parser to work in Colab
     parser.add_argument('--train_folder', type=str, default='small_audio/')
-    parser.add_argument('--val_folder', type=str, default='audio/')
+    parser.add_argument('--val_folder', type=str, default='small_audio/')
     args = parser.parse_args()
 
     drive_path = '/content/drive/MyDrive/DL_data/'
@@ -33,19 +29,20 @@ def main():
     start = datetime.now()
     # Create datasets
     tng_dataset = create_dataset(audio_input_path_tng, json_path_tng)
-    # val_dataset = create_dataset(audio_input_path_val, json_path_val)
+    val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
     # Create Data Loaders
     tng_dataloader = DataLoader(tng_dataset, batch_size=2, shuffle=False)
-    # val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
+    val_dataloader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
-    # Test dataloader function
-    # sample = next(iter(tng_dataloader))
-    # plt.imshow(img)
-    # plt.show()
-    for batch in tng_dataloader:
-        print(f'label ({batch["label"].shape}):{batch["label"]}\nimg ({batch["img"].shape}):\n{batch["img"]}')
-    # print(f'img:\n{img}')
+    # for batch in tng_dataloader:
+    #     print(f'label ({batch["label"].shape}):{batch["label"]}\nimg ({batch["img"].shape}):\n{batch["img"]}')
+
+    # Load model
+
+    # Training Loop
+
+    # Validation Loop
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
