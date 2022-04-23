@@ -85,7 +85,8 @@ def main():
             tng_loss.backward()
             optimizer.step()
             epoch_tng_loss += float(tng_loss.detach().item())
-            epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().detach.item()
+            with torch.no_grad():
+                epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             n += len(label_batch)
 
         print(f'\nn = {n}')
