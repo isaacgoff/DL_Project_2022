@@ -15,9 +15,11 @@ class Models():
             raise ValueError('Model list does not contain model "%s"' %(model_name))
     
     def choose_model(self):
+        print("Test 0\n")
         if self.input_model == 'Basic_4_Layer_CNN':
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
+            print("Test 1\n")
             model = models.alexnet(False, False)
             print("Inside models: before change\n")
             model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
