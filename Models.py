@@ -2,25 +2,26 @@ from torch import nn
 from torch.nn.functional import softmax
 import torchvision.models as models
 
-
 # List of models to choose from. Currently in list:
 #   * Basic 4 layer CNN
 #   * AlexNet
-
+#   * VGG16
 class Models():
     def __init__(self, model_name: str):
-        self.model_list = ['Basic_4_Layer_CNN', 'Alex_Net']
+        self.model_list = ['Basic_4_Layer_CNN', 'Alex_Net', 'VGG_16']
         self.input_model = model_name
+        self.num_output_classes = 11
         if self.input_model not in self.model_list:
             raise ValueError('Model list does not contain model "%s"' %(model_name))
-        # self.choose_model()
     
     def choose_model(self):
         if self.input_model == 'Basic_4_Layer_CNN':
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
-        print("Inside models file: ", model)
+            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
+        elif self.input_model == 'VGG_16':
+            model = models.vgg16(False, False)
         return model
 
 
@@ -45,9 +46,7 @@ class Basic_4_Layer_CNN(nn.Module):
             nn.Flatten(),
             nn.Linear(30 * 8 * 8, 200), nn.ReLU(),
             nn.Linear(200, 100), nn.ReLU(),
-            nn.Linear(100, 11)
-
-        )
+            nn.Linear(100, 11)                                          # Because we have 11 output classes
 
     def forward(self, x):
         return softmax(self.net(x))
