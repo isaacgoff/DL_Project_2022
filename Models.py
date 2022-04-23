@@ -14,8 +14,6 @@ class Models():
         self.num_output_classes = 11
         if self.input_model not in self.model_list:
             raise ValueError('Model list does not contain model "%s"' %(model_name))
-        output_model = self.choose_model()
-        return output_model
     
     def choose_model(self):
         if self.input_model == 'Basic_4_Layer_CNN':
