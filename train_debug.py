@@ -14,7 +14,7 @@ def main():
     parser.add_argument('--val_folder', type=str, default='small_audio/')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--lr', type=float, default=.01)
-    parser.add_argument('--num_epochs', type=int, default=50)
+    parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--status_interval', type=int, default=1)
     args = parser.parse_args()
 
@@ -37,77 +37,79 @@ def main():
     tng_dataset = create_dataset(audio_input_path_tng, json_path_tng)
     val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
-    print(tng_dataset)
-    print("\n\n****************\n\n\n")
-    print(val_dataset)
+    # Create Data Loaders
+    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=False)
+    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
-    # # Create Data Loaders
-    # tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=False)
-    # val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
+    # Load model
+    net = BasicCNN().to(device)
 
-    # # for batch in tng_dataloader:
-    # #     print(f'label ({label.shape}):{label}\nimg ({batch["img"].shape}):\n{batch["img"]}')
+    def init_weights(m):
+        if type(m) == nn.Linear or type(m) == nn.Conv2d:
+            nn.init.xavier_uniform_(m.weight)
 
-    # # Load model
-    # net = BasicCNN().to(device)
+    net.apply(init_weights)
 
-    # def init_weights(m):
-    #     if type(m) == nn.Linear or type(m) == nn.Conv2d:
-    #         nn.init.xavier_uniform_(m.weight)
+    optimizer = torch.optim.SGD(net.parameters(), lr=args.lr)
+    loss = nn.CrossEntropyLoss()
 
-    # net.apply(init_weights)
+    epoch = 0
+    for epoch in range(args.num_epochs):
+        epoch_tng_loss = 0
+        epoch_tng_score = 0
+        epoch_val_score = 0
 
-    # optimizer = torch.optim.SGD(net.parameters(), lr=args.lr)
-    # loss = nn.CrossEntropyLoss()
+        # Training Loop
+        net.train()
+        n = 0
+        print(f'\n*** TRAINING LOOP ***\n')
+        for (img_batch, label_batch) in tng_dataloader:
+            optimizer.zero_grad()
+            img_batch = img_batch.to(device)
+            label_batch = label_batch.to(device)
+            print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
-    # epoch = 0
-    # for epoch in range(args.num_epochs):
-    #     epoch_tng_loss = 0
-    #     epoch_tng_score = 0
-    #     epoch_val_score = 0
+            predicted_labels = net(img_batch)
+            print(f'predicted_labels: {predicted_labels}')
 
-    #     # Training Loop
-    #     net.train()
-    #     n = 0
-    #     for (img_batch, label_batch) in tng_dataloader:
-    #         optimizer.zero_grad()
-    #         img_batch = img_batch.to(device)
-    #         label_batch = label_batch.to(device)
+            tng_loss = loss(predicted_labels, label_batch)
+            tng_loss.backward()
+            optimizer.step()
+            epoch_tng_loss += float(tng_loss.detach().item())
+            epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch).sum().detach.item()
+            n += len(label_batch)
 
-    #         predicted_labels = net(img_batch)
+        print(f'\nn = {n}')
+        epoch_tng_loss /= len(tng_dataloader)
+        epoch_tng_score /= n
 
-    #         tng_loss = loss(predicted_labels, label_batch)
-    #         tng_loss.backward()
-    #         optimizer.step()
-    #         epoch_tng_loss += float(tng_loss.detach().item())
-    #         epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch).sum().detach.item()
-    #         n += len(label_batch)
+        # Validation Loop
+        print(f'\n*** VALIDATION LOOP ***\n')
+        with torch.no_grad():
+            net.eval()
+            n = 0
+            for (img_batch, label_batch) in val_dataloader:
+                img_batch = img_batch.to(device)
+                label_batch = label_batch.to(device)
+                print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
-    #     epoch_tng_loss /= len(tng_dataloader)
-    #     epoch_tng_score /= n
+                predicted_labels = net(img_batch)
+                print(f'predicted_labels: {predicted_labels}')
 
-    #     # Validation Loop
-    #     with torch.no_grad():
-    #         net.eval()
-    #         n = 0
-    #         for (img_batch, label_batch) in val_dataloader:
-    #             img_batch = img_batch.to(device)
-    #             label_batch = label_batch.to(device)
+                epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch).sum().item()
+                n += len(label_batch)
 
-    #             predicted_labels = net(img_batch)
+            print(f'\nn = {n}')
+            epoch_val_score /= n
 
-    #             epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch).sum().item()
-    #             n += len(label_batch)
-    #         epoch_val_score /= n
+        if epoch % args.status_interval == 0:
+            print(f'\nepoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
+                  f' Training Score = {epoch_tng_score} // Validation Score = {epoch_val_score}')
 
-    #     if epoch % args.status_interval == 0:
-    #         print(f'\nepoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
-    #               f' Training Score = {epoch_tng_score} // Validation Score = {epoch_val_score}')
+        epoch += 1
 
-    #     epoch += 1
-
-    # end = datetime.now()
-    # print(f'\nelapsed time: {end - start}')
+    end = datetime.now()
+    print(f'\nelapsed time: {end - start}')
 
 
 if __name__ == '__main__':
