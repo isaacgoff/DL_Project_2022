@@ -27,9 +27,6 @@ class Models():
         return model
 
 
-
-
-
 class Basic_4_Layer_CNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -49,6 +46,7 @@ class Basic_4_Layer_CNN(nn.Module):
             nn.Linear(30 * 8 * 8, 200), nn.ReLU(),
             nn.Linear(200, 100), nn.ReLU(),
             nn.Linear(100, 11)                                          # Because we have 11 output classes
+        )
 
     def forward(self, x):
         return softmax(self.net(x))
