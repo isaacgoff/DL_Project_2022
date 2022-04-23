@@ -25,9 +25,6 @@ class Models():
         return model
 
 
-
-
-
 class Basic_4_Layer_CNN(nn.Module):
     def __init__(self):
         super().__init__()
