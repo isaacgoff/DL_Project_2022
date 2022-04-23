@@ -20,14 +20,16 @@ class Models():
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
-            model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
         elif self.input_model == 'VGG_16':
             model = models.vgg16(False, False)
-            model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
         elif self.input_model == 'Res_Net_18':
             model = models.resnet18(False, False)
+            model.fc = nn.Linear(in_features=512, out_features=self.num_output_classes, bias=True)
+            model.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
         return model
 
 
