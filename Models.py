@@ -19,10 +19,13 @@ class Models():
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
-            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
+            model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
         elif self.input_model == 'VGG_16':
             model = models.vgg16(False, False)
         return model
+
+
+
 
 
 class Basic_4_Layer_CNN(nn.Module):
