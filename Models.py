@@ -25,8 +25,8 @@ class Models():
             model = models.vgg16(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
         elif self.input_model == 'Res_Net_18':
-            model = models.resnet18(False, False)
-            model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            # model = models.resnet18(False, False)
+            raise ValueError('ResNet18 has not been defined')
         return model
 
 
