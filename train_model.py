@@ -43,7 +43,8 @@ def main():
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
     # Load model
-    net = Models('Basic_4_Layer_CNN').to(device)
+    net = Models('Basic_4_Layer_CNN')
+    net = net.to(device)
 
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
