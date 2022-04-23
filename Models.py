@@ -21,12 +21,13 @@ class Models():
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
         elif self.input_model == 'VGG_16':
             model = models.vgg16(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
         elif self.input_model == 'Res_Net_18':
-            # model = models.resnet18(False, False)
-            raise ValueError('ResNet18 has not been defined')
+            model = models.resnet18(False, False)
         return model
 
 
