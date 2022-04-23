@@ -19,7 +19,9 @@ class Models():
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
+            print("Inside models: before change\n")
             model.classifier[6] = nn.Linear(in_features=4096, out_features=11, bias=True)
+            print("Inside models: after change\n")
         elif self.input_model == 'VGG_16':
             model = models.vgg16(False, False)
         return model
