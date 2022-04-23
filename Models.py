@@ -8,18 +8,19 @@ import torchvision.models as models
 #   * AlexNet
 
 class Models():
-    def __init__(self, model_name: str) -> None:
+    def __init__(self, model_name: str):
         self.model_list = ['Basic_4_Layer_CNN', 'Alex_Net']
         self.input_model = model_name
         if self.input_model not in self.model_list:
             raise ValueError('Model list does not contain model "%s"' %(model_name))
-        self.choose_model()
+        # self.choose_model()
     
     def choose_model(self):
         if self.input_model == 'Basic_4_Layer_CNN':
             model = Basic_4_Layer_CNN()
         elif self.input_model == 'Alex_Net':
             model = models.alexnet(False, False)
+        print("Inside models file: ", model)
         return model
 
 
