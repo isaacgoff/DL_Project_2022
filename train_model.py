@@ -77,7 +77,7 @@ def main():
             print(f'img_batch:\n{img_batch}\nlabel_batch ({label_batch.shape}):\n{label_batch}')
 
             img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
-            print(f'img_batch shape: {img_batch.shape}')
+            # print(f'img_batch shape: {img_batch.shape}')
             predicted_labels = net(img_batch)
             print(f'predicted_labels ({predicted_labels.shape}): {predicted_labels}')
 
@@ -103,10 +103,11 @@ def main():
                 label_batch = label_batch.to(device)
                 print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
+                img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
                 predicted_labels = net(img_batch)
                 print(f'predicted_labels: {predicted_labels}')
 
-                epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch).sum().item()
+                epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
                 n += len(label_batch)
 
             print(f'\nn = {n}')
