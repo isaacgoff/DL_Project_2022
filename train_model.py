@@ -4,7 +4,7 @@ from torch import nn
 from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
-from BasicCNN import BasicCNN
+from Models import Models
 
 
 def main():
@@ -12,7 +12,8 @@ def main():
     parser.add_argument('-f')  # Required for argument parser to work in Colab
     parser.add_argument('--train_folder', type=str, default='small_audio/')
     parser.add_argument('--val_folder', type=str, default='small_audio/')
-    parser.add_argument('--batch_size', type=int, default=2)
+    parser.add_argument('--model', type=str, default='Basic_4_Layer_CNN')
+    parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--lr', type=float, default=.01)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--status_interval', type=int, default=1)
@@ -42,7 +43,7 @@ def main():
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
     # Load model
-    net = BasicCNN().to(device)
+    net = Models('Basic_4_Layer_CNN').to(device)
 
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
