@@ -46,7 +46,7 @@ def main():
     print(f'\nDatasets created in {datetime.now()-start}')
 
     # Load model
-    net = Models('Basic_4_Layer_CNN').choose_model().to(device)
+    net = Models(args.model).choose_model().to(device)
 
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
