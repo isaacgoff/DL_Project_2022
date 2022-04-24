@@ -5,7 +5,7 @@ def plot_model_results(epoch_results):
 
     # Plot training and validation loss by epoch
     # Create lists for plotting
-    epochs, tng_losses, val_losses, tng_acc, val_acc = [], [], []
+    epochs, tng_losses, val_losses, tng_acc, val_acc = [], [], [], [], []
     for epoch in epoch_results:
         epochs.append(epoch_results["epoch"])
         tng_losses.append(epoch_results["tng_loss"])
@@ -18,9 +18,9 @@ def plot_model_results(epoch_results):
     plt.plot(epochs, val_losses, label=f'Validation Loss')
     plt.plot(epochs, tng_acc, label=f'Training Accuracy')
     plt.plot(epochs, val_acc, label=f'Validation Accuracy')
-    plt.title(f'Results by Epoch')
+    plt.title(f'Model Results by Epoch')
     plt.xlabel(f'Epoch')
-    plt.ylabel(f'MSE Loss')
+    plt.ylabel(f'Loss and Accuracy')
     plt.legend()
     plt.axis([0, len(epochs), 0, 3])
     plt.show()
