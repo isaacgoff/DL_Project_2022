@@ -147,7 +147,7 @@ def main():
 
     # Save the best model state for future use
     if save_trained_model:
-        torch.save(best_model_state, f'/content/drive/MyDrive/saved_models/{args.model_name}')
+        torch.save(best_model_state, f'{drive_path}nsynth-models/{args.model_name}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
