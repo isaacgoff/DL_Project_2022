@@ -55,4 +55,4 @@ class Basic_4_Layer_CNN(nn.Module):
         )
 
     def forward(self, x):
-        return softmax(self.net(x))
+        return softmax(self.net(x), dim=-1)
