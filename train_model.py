@@ -71,7 +71,7 @@ def main():
         epoch_tng_acc = 0
         epoch_val_loss = 0
         epoch_val_acc = 0
-        epoch_result = {}
+        epoch_result = {'epoch': epoch}
 
         # Training Loop
         net.train()
@@ -129,6 +129,7 @@ def main():
             epoch_result['val_loss'] = epoch_val_loss
             epoch_result['val_acc'] = epoch_val_acc
 
+        epoch_results.append(epoch_result)
         if epoch % args.status_interval == 0:
             print(f'epoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
                   f' Training Score = {epoch_tng_acc} // Validation Score = {epoch_val_acc}')
@@ -150,6 +151,8 @@ def main():
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
 
+    # Call function to generate performance data
+    plot_model_results(epoch_results)
 
 if __name__ == '__main__':
     main()
