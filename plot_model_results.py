@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
+import matplotlib
 
+matplotlib.use("agg")
 
 def plot_model_results(epoch_results):
 
