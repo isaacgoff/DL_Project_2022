@@ -55,13 +55,8 @@ def main():
     optimizer = torch.optim.SGD(net.parameters(), lr=args.lr)
     loss = nn.CrossEntropyLoss()
 
-    # X = torch.rand(size=(1, 1, 128, 128))
-    # for layer in net:
-    #     X = layer(X)
-    #     print(layer.__class__.__name__, 'output shape:\t', X.shape)
-
     epoch = 0
-    for epoch in range(args.num_epochs):
+    for i in range(args.num_epochs):
         epoch_tng_loss = 0
         epoch_tng_score = 0
         epoch_val_score = 0
