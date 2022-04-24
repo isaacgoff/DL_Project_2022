@@ -43,6 +43,8 @@ def main():
     tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=False)
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
+    print(f'\nDatasets created in {datetime.now()-start}')
+
     # Load model
     net = Models('Basic_4_Layer_CNN').choose_model().to(device)
 
@@ -66,7 +68,7 @@ def main():
         n = 0
         # print(f'\n*** TRAINING LOOP ***\n')
         for (img_batch, label_batch) in tng_dataloader:
-            print(img_batch.shape)
+            # print(img_batch.shape)
 
             optimizer.zero_grad()
             img_batch = img_batch.to(device)
