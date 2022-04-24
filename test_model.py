@@ -1,5 +1,4 @@
 import argparse
-from ssl import cert_time_to_seconds
 import torch
 from torch import nn
 from datetime import datetime
@@ -13,7 +12,8 @@ def main():
     parser.add_argument('-f')  # Required for argument parser to work in Colab
     parser.add_argument('--test_folder', type=str, default='audio/')
     parser.add_argument('--batch_size', type=int, default=128)
-    parser.add_argument('--model_name', type=str,  default='billy_joel')
+    parser.add_argument('--model_name', type=str,  default='billy_joel_cnn')
+    parser.add_argument('--model_type', type=str, default='Basic_4_Layer_CNN')
     args = parser.parse_args()
 
     # Dataset and model paths
@@ -43,11 +43,8 @@ def main():
     print(f'\nDatasets created in {datetime.now()-start}')
 
     # Create instance of model and load saved weights
-    model = Models(args.model).choose_model().to(device)
+    model = Models(args.model_type).choose_model().to(device)
     model.load_state_dict(torch.load(f'{model_path}', map_location=device))
-
-    # Initialise cross-entropy loss
-    loss = nn.CrossEntropyLoss()
 
     # Inference loop
     print("Beginning inference loop\n.....")
