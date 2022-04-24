@@ -3,9 +3,10 @@ import torch
 from torch import nn
 from datetime import datetime
 from torch.utils.data import DataLoader
+from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
-from BasicCNN import BasicCNN
+from plot_model_results import plot_model_results
 
 
 def main():
@@ -18,7 +19,14 @@ def main():
     parser.add_argument('--lr', type=float, default=.01)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--status_interval', type=int, default=1)
+    parser.add_argument('--model_name', type=str, default='unspecified')
+    parser.add_argument('--save_model', type=str, default='False')
     args = parser.parse_args()
+
+    if args.save_model.lower() == 'true':
+        save_trained_model = True
+    else:
+        save_trained_model = False
 
     drive_path = '/content/drive/MyDrive/DL_data/'
     json_path_tng = f'{drive_path}nsynth-train/examples.json'
@@ -58,10 +66,13 @@ def main():
     loss = nn.CrossEntropyLoss()
 
     epoch = 0
+    epoch_results =[]
     for i in range(args.num_epochs):
         epoch_tng_loss = 0
-        epoch_tng_score = 0
-        epoch_val_score = 0
+        epoch_tng_acc = 0
+        epoch_val_loss = 0
+        epoch_val_acc = 0
+        epoch_result = {'epoch': epoch}
 
         # Training Loop
         net.train()
@@ -85,12 +96,14 @@ def main():
             optimizer.step()
             epoch_tng_loss += float(tng_loss.detach().item())
             with torch.no_grad():
-                epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
+                epoch_tng_acc += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             n += len(label_batch)
 
         # print(f'\nn = {n}')
         epoch_tng_loss /= len(tng_dataloader)
-        epoch_tng_score /= n
+        epoch_tng_acc /= n
+        epoch_result['tng_loss'] = epoch_tng_loss
+        epoch_result['tng_acc'] = epoch_tng_acc
 
         # Validation Loop
         # print(f'\n*** VALIDATION LOOP ***\n')
@@ -106,21 +119,42 @@ def main():
                 predicted_labels = net(img_batch)
                 # print(f'predicted_labels: {predicted_labels}')
 
-                epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
+                val_loss = loss(predicted_labels, label_batch)
+                epoch_val_loss += float(val_loss.item())
+                epoch_val_acc += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
                 n += len(label_batch)
 
             # print(f'\nn = {n}')
-            epoch_val_score /= n
+            epoch_val_loss /= len(val_dataloader)
+            epoch_val_acc /= n
+            epoch_result['val_loss'] = epoch_val_loss
+            epoch_result['val_acc'] = epoch_val_acc
 
+        epoch_results.append(epoch_result)
         if epoch % args.status_interval == 0:
             print(f'epoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
-                  f' Training Score = {epoch_tng_score} // Validation Score = {epoch_val_score}')
+                  f' Training Score = {epoch_tng_acc} // Validation Score = {epoch_val_acc}')
+
+        # Establish training cutoff criteria
+        if epoch == 0:
+            max_val_acc = epoch_val_acc
+            best_model_state = deepcopy(net.state_dict())
+        elif epoch_val_acc > max_val_acc:
+            # print(f'new minimum loss achieved at epoch {epoch}', file=output_file)
+            max_val_acc = epoch_val_acc
+            best_model_state = deepcopy(net.state_dict())  # Save state of model with minimum validation loss
 
         epoch += 1
+
+    # Save the best model state for future use
+    if save_trained_model:
+        torch.save(best_model_state, f'{drive_path}nsynth-models/{args.model_name}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
 
+    # Call function to generate performance data
+    plot_model_results(epoch_results)
 
 if __name__ == '__main__':
     main()
