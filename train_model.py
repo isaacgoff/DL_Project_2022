@@ -64,19 +64,19 @@ def main():
         # Training Loop
         net.train()
         n = 0
-        print(f'\n*** TRAINING LOOP ***\n')
+        # print(f'\n*** TRAINING LOOP ***\n')
         for (img_batch, label_batch) in tng_dataloader:
             print(img_batch.shape)
 
             optimizer.zero_grad()
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
-            print(f'img_batch:\n{img_batch}\nlabel_batch ({label_batch.shape}):\n{label_batch}')
+            # print(f'img_batch:\n{img_batch}\nlabel_batch ({label_batch.shape}):\n{label_batch}')
 
             img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
             # print(f'img_batch shape: {img_batch.shape}')
             predicted_labels = net(img_batch)
-            print(f'predicted_labels ({predicted_labels.shape}): {predicted_labels}')
+            # print(f'predicted_labels ({predicted_labels.shape}): {predicted_labels}')
 
             tng_loss = loss(predicted_labels, label_batch)
             tng_loss.backward()
@@ -86,28 +86,28 @@ def main():
                 epoch_tng_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             n += len(label_batch)
 
-        print(f'\nn = {n}')
+        # print(f'\nn = {n}')
         epoch_tng_loss /= len(tng_dataloader)
         epoch_tng_score /= n
 
         # Validation Loop
-        print(f'\n*** VALIDATION LOOP ***\n')
+        # print(f'\n*** VALIDATION LOOP ***\n')
         with torch.no_grad():
             net.eval()
             n = 0
             for (img_batch, label_batch) in val_dataloader:
                 img_batch = img_batch.to(device)
                 label_batch = label_batch.to(device)
-                print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
+                # print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
                 img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
                 predicted_labels = net(img_batch)
-                print(f'predicted_labels: {predicted_labels}')
+                # print(f'predicted_labels: {predicted_labels}')
 
                 epoch_val_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
                 n += len(label_batch)
 
-            print(f'\nn = {n}')
+            # print(f'\nn = {n}')
             epoch_val_score /= n
 
         if epoch % args.status_interval == 0:
