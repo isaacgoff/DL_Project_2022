@@ -113,7 +113,7 @@ def main():
             epoch_val_score /= n
 
         if epoch % args.status_interval == 0:
-            print(f'\nepoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
+            print(f'epoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
                   f' Training Score = {epoch_tng_score} // Validation Score = {epoch_val_score}')
 
         epoch += 1
