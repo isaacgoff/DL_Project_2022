@@ -5,7 +5,6 @@ from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
 from Models import Models
-from BasicCNN import BasicCNN
 
 
 def main():
