@@ -7,11 +7,11 @@ def plot_model_results(epoch_results):
     # Create lists for plotting
     epochs, tng_losses, val_losses, tng_acc, val_acc = [], [], [], [], []
     for epoch in epoch_results:
-        epochs.append(epoch_results["epoch"])
-        tng_losses.append(epoch_results["tng_loss"])
-        val_losses.append(epoch_results["val_loss"])
-        tng_acc.append(epoch_results["tng_acc"])
-        val_acc.append(epoch_results["val_acc"])
+        epochs.append(epoch["epoch"])
+        tng_losses.append(epoch["tng_loss"])
+        val_losses.append(epoch["val_loss"])
+        tng_acc.append(epoch["tng_acc"])
+        val_acc.append(epoch["val_acc"])
 
     # Code to plot loss values by epoch
     plt.plot(epochs, tng_losses, label=f'Training Loss')
