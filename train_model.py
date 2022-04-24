@@ -138,6 +138,7 @@ def main():
         # Establish training cutoff criteria
         if epoch == 0:
             max_val_acc = epoch_val_acc
+            best_model_state = deepcopy(net.state_dict())
         elif epoch_val_acc > max_val_acc:
             # print(f'new minimum loss achieved at epoch {epoch}', file=output_file)
             max_val_acc = epoch_val_acc
