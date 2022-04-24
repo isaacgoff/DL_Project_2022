@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
+from plot_model_results import plot_model_results
 
 
 def main():

@@ -26,3 +26,4 @@ def plot_model_results(epoch_results):
     plt.show()
     # plt.savefig(f'{filename}-plot_loss.png', dpi=150, bbox_inches='tight', facecolor='gray')
     plt.clf()
+
