@@ -109,8 +109,8 @@ def main():
         # print(f'\nn = {n}')
         epoch_tng_loss /= len(tng_dataloader)
         epoch_tng_acc /= n
-        epoch_result['tng_loss'] = epoch_tng_loss
-        epoch_result['tng_acc'] = epoch_tng_acc
+        epoch_result['tng_loss'] = "{:.4f}".format(epoch_tng_loss)
+        epoch_result['tng_acc'] = "{:.4f}".format(epoch_tng_acc)
 
         # Validation Loop
         # print(f'\n*** VALIDATION LOOP ***\n')
@@ -139,15 +139,16 @@ def main():
             # print(f'\nn = {n}')
             epoch_val_loss /= len(val_dataloader)
             epoch_val_acc /= n
-            epoch_result['val_loss'] = epoch_val_loss
-            epoch_result['val_acc'] = epoch_val_acc
+            epoch_result['val_loss'] = "{:.4f}".format(epoch_val_loss)
+            epoch_result['val_acc'] = "{:.4f}".format(epoch_val_acc)
             # label_counts = torch.sum(confusion_matrix, dim=1).reshape(len(confusion_matrix), 1)
             # confusion_matrix /= label_counts
 
         epoch_results.append(epoch_result)
         if epoch % args.status_interval == 0:
-            print(f'epoch {epoch} completed: Training Loss = {epoch_tng_loss} //'
-                  f' Training Score = {epoch_tng_acc} // Validation Score = {epoch_val_acc}')
+            print(f'epoch {epoch} completed: Training Loss = {"{:.4f}".format(epoch_tng_loss)} //'
+                  f' Training Acc = {"{:.4f}".format(epoch_tng_acc)} // '
+                  f'Validation Acc = {"{:.4f}".format(epoch_val_acc)}')
 
         # Establish training cutoff criteria
         if epoch == 0:
@@ -166,6 +167,8 @@ def main():
 
     # Call function to generate performance data
     print(f'\nBest Epoch: {best_epoch}')
+    print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
+          f'// Validation Acc = {epoch_results["val_acc"]}')
     plot_model_results(epoch_results)
 
     # Save the best model state for future use
