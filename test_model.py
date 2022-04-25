@@ -55,14 +55,12 @@ def main():
         for (img_batch, label_batch) in test_dataloader:
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
-            print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
-            print(f'label_batch_type: {type(label_batch)}')
+            #print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
             img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
             #plt.imshow(img_batch)
             predicted_labels = model(img_batch)
-            print(f'predicted_labels_type: {type(predicted_labels)}')
-            print(f'predicted_labels: {predicted_labels}')
+            #print(f'predicted_labels: {predicted_labels}')
 
             test_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             #print(f'Correct predictions in batch: {test_score}\n')
@@ -71,8 +69,6 @@ def main():
             confusion_matrix[torch.argmax(label_batch)][torch.argmax(predicted_labels)] += 1
         
             n += len(label_batch)
-            if n != 0: 
-                break
            
         print(confusion_matrix)
         # print(f'\nn = {n}')
