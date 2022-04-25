@@ -14,6 +14,7 @@ def plot_model_results(epoch_results):
         val_acc.append(epoch["val_acc"])
 
     # Code to plot loss values by epoch
+    plt.figure(1)
     plt.plot(epochs, tng_losses, label=f'Training Loss')
     plt.plot(epochs, val_losses, label=f'Validation Loss')
     plt.plot(epochs, tng_acc, label=f'Training Accuracy')
@@ -23,7 +24,6 @@ def plot_model_results(epoch_results):
     plt.ylabel(f'Loss and Accuracy')
     plt.legend()
     plt.axis([0, len(epochs), 0, 3])
-    # plt.show()
-    plt.savefig(f'/content/drive/MyDrive/DL_data/plot-results.png', dpi=150, bbox_inches='tight', facecolor='gray')
-    plt.clf()
-    
+    plt.show()
+    # plt.savefig(f'/content/drive/MyDrive/DL_data/plot-results.png', dpi=150, bbox_inches='tight', facecolor='gray')
+    # plt.clf()
