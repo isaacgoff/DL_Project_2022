@@ -22,12 +22,18 @@ def main():
     parser.add_argument('--status_interval', type=int, default=1)
     parser.add_argument('--model_name', type=str, default='unspecified')
     parser.add_argument('--save_model', type=str, default='False')
+    parser.add_argument('--shuffle', type=str, default='True')
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
         save_trained_model = True
     else:
         save_trained_model = False
+
+    if args.shuffle.lower() == 'true':
+        shuffle = True
+    else:
+        shuffle = False
 
     drive_path = '/content/drive/MyDrive/DL_data/'
     json_path_tng = f'{drive_path}nsynth-train/examples.json'
@@ -49,8 +55,8 @@ def main():
     val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
     # Create Data Loaders
-    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=True)
+    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=shuffle)
+    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=shuffle)
 
     print(f'\nDatasets created in {datetime.now()-start}')
 
