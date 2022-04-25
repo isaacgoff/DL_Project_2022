@@ -14,10 +14,10 @@ def plot_confusion_matrix(cm, normalize=False, title='Confusion matrix', cmap=pl
     plt.xticks(tick_marks, classes, rotation=45)
     plt.yticks(tick_marks, classes)
 
-    fmt = 'd'
-    thresh = cm.max() / 2.
+    thresh = 0.5
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        plt.text(j, i, format(cm[i, j]), horizontalalignment="center", color="white" if cm[i, j] > thresh else "black")
+        plt.text(j, i, "{:.3f}".format(cm[i, j]), horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
     
     plt.tight_layout()
     plt.ylabel('True label')

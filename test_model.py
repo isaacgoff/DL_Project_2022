@@ -78,7 +78,8 @@ def main():
             n += len(label_batch)
         
         # print(f'\nn = {n}')
-
+        label_counts = torch.sum(confusion_matrix, dim=1).reshape(len(confusion_matrix), 1)
+        confusion_matrix /= label_counts
         print(f'Confusion Matrix:\n {confusion_matrix}')
         #Use %run not !python3 to get cm to display in collab
         plot_confusion_matrix(confusion_matrix)
