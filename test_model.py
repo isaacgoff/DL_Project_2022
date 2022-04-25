@@ -70,7 +70,8 @@ def main():
             print(label_batch)
             print(torch.argmax(predicted_labels))
             print(predicted_labels)
-            confusion_matrix[torch.argmax(label_batch)][torch.argmax(predicted_labels)] += 1
+            for i in range(args.batch_size):
+              confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
         
             n += len(label_batch)
            
