@@ -135,7 +135,7 @@ def main():
             epoch_val_acc /= n
             epoch_result['val_loss'] = epoch_val_loss
             epoch_result['val_acc'] = epoch_val_acc
-            label_counts = torch.sum(confusion_matrix, dim=1)
+            label_counts = torch.sum(confusion_matrix, dim=1).reshape(len(confusion_matrix), 1)
             confusion_matrix /= label_counts
 
         epoch_results.append(epoch_result)
@@ -147,16 +147,18 @@ def main():
         if epoch == 0:
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())
+            best_confusion_matrix = confusion_matrix
         elif epoch_val_acc > max_val_acc:
             # print(f'new minimum loss achieved at epoch {epoch}', file=output_file)
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())  # Save state of model with minimum validation loss
+            best_confusion_matrix = confusion_matrix
 
         epoch += 1
 
     # Display confusion matrix
-    print(f'Confusion Matrix:\n {confusion_matrix}')
-    plot_confusion_matrix(confusion_matrix)
+    print(f'Confusion Matrix:\n {best_confusion_matrix}')
+    plot_confusion_matrix(best_confusion_matrix)
 
     # Save the best model state for future use
     if save_trained_model:
