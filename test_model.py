@@ -6,6 +6,8 @@ from torch.utils.data import DataLoader
 from create_dataset import create_dataset
 from Models import Models
 
+from Confusion_matrix_graphic import plot_confusion_matrix
+
 
 def main():
     parser = argparse.ArgumentParser(description='Test the individual instrument identification model')
@@ -72,6 +74,7 @@ def main():
 
         print(f'Confusion Matrix:\n {confusion_matrix}')
         # print(f'\nn = {n}')
+        plot_confusion_matrix(confusion_matrix)
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
 
