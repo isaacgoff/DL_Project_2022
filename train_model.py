@@ -175,7 +175,6 @@ def main():
     # print(f'Confusion Matrix:\n {best_confusion_matrix}')
     plt.figure(1, figsize=(11,11))
     plot_confusion_matrix(best_confusion_matrix)
-    plt.show()
 
     # Save the best model state for future use
     if save_trained_model:
