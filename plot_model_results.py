@@ -25,6 +25,5 @@ def plot_model_results(epoch_results):
     plt.legend()
     plt.axis([0, len(epochs), 0, 3])
     plt.show()
-    plt.figure().close()
     # plt.savefig(f'/content/drive/MyDrive/DL_data/plot-results.png', dpi=150, bbox_inches='tight', facecolor='gray')
     # plt.clf()
