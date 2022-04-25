@@ -160,7 +160,7 @@ def main():
     plot_model_results(epoch_results)
 
     # Display confusion matrix
-    print(f'Confusion Matrix:\n {best_confusion_matrix}')
+    # print(f'Confusion Matrix:\n {best_confusion_matrix}')
     plot_confusion_matrix(best_confusion_matrix)
 
     # Save the best model state for future use
