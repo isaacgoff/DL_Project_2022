@@ -80,6 +80,7 @@ def main():
         # print(f'\nn = {n}')
 
         print(f'Confusion Matrix:\n {confusion_matrix}')
+        #Use %run not !python3 to get cm to display in collab
         plot_confusion_matrix(confusion_matrix)
 
         test_score = test_score / n
