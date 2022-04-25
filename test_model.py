@@ -1,6 +1,5 @@
 import argparse
 import torch
-from torch import nn
 from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
