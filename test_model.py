@@ -12,7 +12,7 @@ from Confusion_matrix_graphic import plot_confusion_matrix
 def main():
     parser = argparse.ArgumentParser(description='Test the individual instrument identification model')
     parser.add_argument('-f')  # Required for argument parser to work in Colab
-    parser.add_argument('--test_folder', type=str, default='audio/')
+    parser.add_argument('--test_folder', type=str, default='small_audio/')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--model_name', type=str,  default='billy_joel_cnn')
     parser.add_argument('--model_type', type=str, default='Basic_4_Layer_CNN')
@@ -20,8 +20,10 @@ def main():
 
     # Dataset and model paths
     drive_path = '/content/drive/MyDrive/DL_data/'
-    json_path_test = f'{drive_path}nsynth-test/examples.json'
-    audio_input_path_test = f'{drive_path}nsynth-test/{args.test_folder}'
+    # json_path_test = f'{drive_path}nsynth-test/examples.json'
+    # audio_input_path_test = f'{drive_path}nsynth-test/{args.test_folder}'
+    json_path_test = f'{drive_path}nsynth-valid/examples.json'
+    audio_input_path_test = f'{drive_path}nsynth-valid/{args.test_folder}'
     model_path = f'{drive_path}nsynth-models/{args.model_name}'
 
     # Select GPU for runtime if available
