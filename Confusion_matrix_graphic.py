@@ -21,6 +21,6 @@ def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
         plt.text(j, i, "{:.3f}".format(cm[i, j]), horizontalalignment="center",
                            color="white" if cm[i, j] > thresh else "black")
 
-    fig.tight_layout()
+    plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
