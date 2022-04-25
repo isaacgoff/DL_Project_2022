@@ -170,6 +170,7 @@ def main():
     plt.figure(0)
     plot_model_results(epoch_results)
     plt.show()
+    plt.clf()
 
     # Display confusion matrix
     # print(f'Confusion Matrix:\n {best_confusion_matrix}')
