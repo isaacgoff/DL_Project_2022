@@ -8,6 +8,7 @@ from create_dataset import create_dataset
 from Models import Models
 from plot_model_results import plot_model_results
 from Confusion_matrix_graphic import plot_confusion_matrix
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -166,11 +167,15 @@ def main():
 
     # Call function to generate performance data
     print(f'\nBest Epoch: {best_epoch}')
+    plt.figure(0)
     plot_model_results(epoch_results)
+    plt.show()
 
     # Display confusion matrix
     # print(f'Confusion Matrix:\n {best_confusion_matrix}')
+    plt.figure(1, figsize=(11,11))
     plot_confusion_matrix(best_confusion_matrix)
+    plt.show()
 
     # Save the best model state for future use
     if save_trained_model:
