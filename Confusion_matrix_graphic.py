@@ -9,7 +9,7 @@ def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
     print('Confusion matrix')
     classes = ('bass', 'brass', 'flute', 'guitar', 'keyboard', 'mallet', 'organ', 'reed', 'string', 'vocal')
     plt.figure(2, figsize=(11,11))
-    plt.figure(2).imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.figure(2).title(title)
     plt.figure(2).colorbar()
     tick_marks = np.arange(len(classes))
