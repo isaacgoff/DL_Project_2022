@@ -52,6 +52,7 @@ def main():
     with torch.no_grad():
         model.eval()
         n = 0
+        confusion_matrix = torch.zeros(11,11)
         for (img_batch, label_batch) in test_dataloader:
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
@@ -63,8 +64,13 @@ def main():
 
             test_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             print(f'Correct predictions in batch: {test_score}\n')
+
+            for i in range(args.batch_size):
+              confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
+
             n += len(label_batch)
 
+        print(f'Confusion Matrix: {confusion_matrix}')
         # print(f'\nn = {n}')
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
