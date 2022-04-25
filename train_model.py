@@ -165,17 +165,19 @@ def main():
 
         epoch += 1
 
-    # Call function to generate performance data
-    print(f'\nBest Epoch: {best_epoch}')
-    plt.figure(0)
-    plot_model_results(epoch_results)
-    plt.show()
-    plt.clf()
-
     # Display confusion matrix
     # print(f'Confusion Matrix:\n {best_confusion_matrix}')
-    plt.figure(1, figsize=(11,11))
+    plt.figure(0, figsize=(11,11))
+    # plot_confusion_matrix(best_confusion_matrix, fig, ax)
     plot_confusion_matrix(best_confusion_matrix)
+
+    # Call function to generate performance data
+    print(f'\nBest Epoch: {best_epoch}')
+    # fig,ax = plt.subplots(2,1)
+    plt.figure(1)
+    # plot_model_results(epoch_results, fig, ax)
+    plot_model_results(epoch_results)
+    plt.show()
 
     # Save the best model state for future use
     if save_trained_model:
