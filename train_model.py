@@ -7,6 +7,7 @@ from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
 from plot_model_results import plot_model_results
+from Confusion_matrix_graphic import plot_confusion_matrix
 
 
 def main():
@@ -110,6 +111,7 @@ def main():
         with torch.no_grad():
             net.eval()
             n = 0
+            confusion_matrix = torch.zeros(11, 11)
             for (img_batch, label_batch) in val_dataloader:
                 img_batch = img_batch.to(device)
                 label_batch = label_batch.to(device)
@@ -124,11 +126,17 @@ def main():
                 epoch_val_acc += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
                 n += len(label_batch)
 
+                # calculate confusion matrix elements
+                for j in range(len(label_batch)):
+                    confusion_matrix[torch.argmax(label_batch[j, :])][torch.argmax(predicted_labels[j, :])] += 1
+
             # print(f'\nn = {n}')
             epoch_val_loss /= len(val_dataloader)
             epoch_val_acc /= n
             epoch_result['val_loss'] = epoch_val_loss
             epoch_result['val_acc'] = epoch_val_acc
+            label_counts = torch.sum(confusion_matrix, dim=1)
+            confusion_matrix /= label_counts
 
         epoch_results.append(epoch_result)
         if epoch % args.status_interval == 0:
@@ -145,6 +153,10 @@ def main():
             best_model_state = deepcopy(net.state_dict())  # Save state of model with minimum validation loss
 
         epoch += 1
+
+    # Display confusion matrix
+    print(f'Confusion Matrix:\n {confusion_matrix}')
+    plot_confusion_matrix(confusion_matrix)
 
     # Save the best model state for future use
     if save_trained_model:
