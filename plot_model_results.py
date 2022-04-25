@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-def plot_model_results(epoch_results):
+def plot_model_results(epoch_results, fig, ax):
 
     # Plot training and validation loss by epoch
     # Create lists for plotting
@@ -15,15 +15,15 @@ def plot_model_results(epoch_results):
 
     # Code to plot loss values by epoch
     # plt.figure(1)
-    plt.plot(epochs, tng_losses, label=f'Training Loss')
-    plt.plot(epochs, val_losses, label=f'Validation Loss')
-    plt.plot(epochs, tng_acc, label=f'Training Accuracy')
-    plt.plot(epochs, val_acc, label=f'Validation Accuracy')
-    plt.title(f'Model Results by Epoch')
-    plt.xlabel(f'Epoch')
-    plt.ylabel(f'Loss and Accuracy')
-    plt.legend()
-    plt.axis([0, len(epochs), 0, 3])
+    ax.plot(epochs, tng_losses, label=f'Training Loss')
+    ax.plot(epochs, val_losses, label=f'Validation Loss')
+    ax.plot(epochs, tng_acc, label=f'Training Accuracy')
+    ax.plot(epochs, val_acc, label=f'Validation Accuracy')
+    ax.title(f'Model Results by Epoch')
+    ax.xlabel(f'Epoch')
+    ax.ylabel(f'Loss and Accuracy')
+    ax.legend()
+    ax.axis([0, len(epochs), 0, 3])
     # plt.show()
     # plt.savefig(f'/content/drive/MyDrive/DL_data/plot-results.png', dpi=150, bbox_inches='tight', facecolor='gray')
     # plt.clf()
