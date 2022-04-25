@@ -118,7 +118,7 @@ def main():
         with torch.no_grad():
             net.eval()
             n = 0
-            confusion_matrix = torch.zeros(11, 11)
+            # confusion_matrix = torch.zeros(11, 11)
             for (img_batch, label_batch) in val_dataloader:
                 img_batch = img_batch.to(device)
                 label_batch = label_batch.to(device)
@@ -134,16 +134,16 @@ def main():
                 n += len(label_batch)
 
                 # calculate confusion matrix elements
-                for j in range(len(label_batch)):
-                    confusion_matrix[torch.argmax(label_batch[j, :])][torch.argmax(predicted_labels[j, :])] += 1
+                # for j in range(len(label_batch)):
+                #     confusion_matrix[torch.argmax(label_batch[j, :])][torch.argmax(predicted_labels[j, :])] += 1
 
             # print(f'\nn = {n}')
             epoch_val_loss /= len(val_dataloader)
             epoch_val_acc /= n
             epoch_result['val_loss'] = epoch_val_loss
             epoch_result['val_acc'] = epoch_val_acc
-            label_counts = torch.sum(confusion_matrix, dim=1).reshape(len(confusion_matrix), 1)
-            confusion_matrix /= label_counts
+            # label_counts = torch.sum(confusion_matrix, dim=1).reshape(len(confusion_matrix), 1)
+            # confusion_matrix /= label_counts
 
         epoch_results.append(epoch_result)
         if epoch % args.status_interval == 0:
@@ -154,28 +154,20 @@ def main():
         if epoch == 0:
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())
-            best_confusion_matrix = confusion_matrix
+            # best_confusion_matrix = confusion_matrix
             best_epoch = epoch
         elif epoch_val_acc > max_val_acc:
             # print(f'new minimum loss achieved at epoch {epoch}', file=output_file)
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())  # Save state of model with minimum validation loss
-            best_confusion_matrix = confusion_matrix
+            # best_confusion_matrix = confusion_matrix
             best_epoch = epoch
 
         epoch += 1
 
     # Call function to generate performance data
     print(f'\nBest Epoch: {best_epoch}')
-    fig,ax = plt.subplots(2,1)
-    plot_model_results(epoch_results, fig, ax[0])
-
-    # Display confusion matrix
-    # print(f'Confusion Matrix:\n {best_confusion_matrix}')
-    # plt.figure(0, figsize=(11,11))
-    plot_confusion_matrix(best_confusion_matrix, fig, ax[1])
-
-    plt.show()
+    plot_model_results(epoch_results)
 
     # Save the best model state for future use
     if save_trained_model:
