@@ -154,15 +154,18 @@ def main():
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())
             best_confusion_matrix = confusion_matrix
+            best_epoch = epoch
         elif epoch_val_acc > max_val_acc:
             # print(f'new minimum loss achieved at epoch {epoch}', file=output_file)
             max_val_acc = epoch_val_acc
             best_model_state = deepcopy(net.state_dict())  # Save state of model with minimum validation loss
             best_confusion_matrix = confusion_matrix
+            best_epoch = epoch
 
         epoch += 1
 
     # Call function to generate performance data
+    print(f'\nBest Epoch: {best_epoch}')
     plot_model_results(epoch_results)
 
     # Display confusion matrix
