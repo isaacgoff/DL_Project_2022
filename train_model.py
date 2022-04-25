@@ -7,8 +7,6 @@ from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
 from plot_model_results import plot_model_results
-from Confusion_matrix_graphic import plot_confusion_matrix
-import matplotlib.pyplot as plt
 
 
 def main():
