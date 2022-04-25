@@ -74,7 +74,7 @@ def main():
             if n != 0: 
                 break
            
-
+        print(confusion_matrix)
         # print(f'\nn = {n}')
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
