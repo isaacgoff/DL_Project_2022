@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--save_model', type=str, default='False')
     parser.add_argument('--shuffle', type=str, default='True')
     parser.add_argument('--label_smoothing_factor', type=float, default=0.0)
+    parser.add_argument('--weight_decay', type=float, default=0.0)
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
@@ -69,7 +70,7 @@ def main():
 
     net.apply(init_weights)
 
-    optimizer = torch.optim.SGD(net.parameters(), lr=args.lr)
+    optimizer = torch.optim.SGD(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     loss = nn.CrossEntropyLoss(label_smoothing=args.label_smoothing_factor)
 
     epoch = 0
