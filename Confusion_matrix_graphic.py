@@ -7,7 +7,7 @@ def plot_confusion_matrix(cm, normalize=False, title='Confusion matrix', cmap=pl
     cm = cm[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 10]]
     print('Confusion matrix')
     classes = ('bass', 'brass', 'flute', 'guitar', 'keyboard', 'mallet', 'organ', 'reed', 'string', 'vocal')
-    plt.figure(figsize=(11,11))
+    plt.figure(2,figsize=(11,11))
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar()
