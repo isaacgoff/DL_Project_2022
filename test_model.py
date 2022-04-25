@@ -71,7 +71,7 @@ def main():
             print(f'Correct predictions in batch: {test_score}\n')
             
             # calculate confusion matrix elements
-            for i in range(args.batch_size):
+            for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
             n += len(label_batch)
