@@ -156,6 +156,9 @@ def main():
 
         epoch += 1
 
+    # Call function to generate performance data
+    plot_model_results(epoch_results)
+
     # Display confusion matrix
     print(f'Confusion Matrix:\n {best_confusion_matrix}')
     plot_confusion_matrix(best_confusion_matrix)
@@ -167,8 +170,6 @@ def main():
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
 
-    # Call function to generate performance data
-    plot_model_results(epoch_results)
 
 if __name__ == '__main__':
     main()
