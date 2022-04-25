@@ -19,7 +19,7 @@ def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
     thresh = 0.5
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
         plt.figure(2).text(j, i, "{:.3f}".format(cm[i, j]), horizontalalignment="center",
-                           color="white" if cm[i, j] > thresh else "black")        
+                           color="white" if cm[i, j] > thresh else "black")
 
     plt.figure(2).tight_layout()
     plt.figure(2).ylabel('True label')
