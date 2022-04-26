@@ -87,7 +87,7 @@ def main():
                 i = 1
                 #for each index grab it's image and plot
                 for index in examples_index:                 
-                    one_img = img_batch[index, 0, :, :]
+                    one_img = img_batch[index.long(), 0, :, :]
                     fig.add_subplot(rows, columns, i)
                     plt.imshow(one_img)
                     plt.axis('off')
