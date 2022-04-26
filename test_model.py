@@ -89,7 +89,7 @@ def main():
                 for index in examples_index:                 
                     one_img = img_batch[index.long(), 0, :, :]
                     fig.add_subplot(rows, columns, i)
-                    plt.imshow(one_img)
+                    plt.imshow(one_img.cpu())
                     plt.axis('off')
                     # plot w labels and predicted labels as titles
                     plt.title(f'Predicted label: {torch.argmax(label_batch[i, :])} True Label: {torch.argmax(predicted_labels[i, :])}')
