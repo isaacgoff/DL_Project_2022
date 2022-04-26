@@ -78,10 +78,10 @@ def main():
             #print some examples of first batch
             if n == 0:
 
-                num_examples = 10
+                num_examples = 20
                 #make random list of example index's
                 examples_index = torch.Tensor(num_examples).random_(0,len(label_batch)) 
-                fig = plt.figure(figsize=(20, 7))                               
+                fig = plt.figure(figsize=(22, 17))                               
                 rows= 2
                 columns = 5
                 i = 1
