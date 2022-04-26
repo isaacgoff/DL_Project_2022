@@ -95,17 +95,15 @@ def main():
                     #flip axis so freuency on bottom
                     ax = plt.gca()
                     ax.invert_yaxis()
-                    #add common labels
-                    fig.add_subplot(111, frame_on=False)
-                    plt.tick_params(labelcolor="none", bottom=False, left=False)
-                    plt.xlabel("Time")
-                    plt.ylabel("Frequency")
-                    
                     # plot w labels and predicted labels as titles
                     plt.title(f'Predicted: {num_to_instrument(torch.argmax(label_batch[i, :]))}   Label: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
                     i += 1
 
-                
+                #add common labels
+                fig.add_subplot(111, frame_on=False)
+                plt.tick_params(labelcolor="none", bottom=False, left=False)
+                plt.xlabel("Time")
+                plt.ylabel("Frequency")                
                             
             n += len(label_batch)
         
