@@ -175,8 +175,8 @@ def main():
 
     # Call function to generate performance data
     print(f'\nBest Epoch: {best_epoch}')
-    print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
-          f'// Validation Acc = {epoch_results["val_acc"]}')
+    # print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
+    #       f'// Validation Acc = {epoch_results["val_acc"]}')
     plot_model_results(epoch_results)
 
     # Save the best model state for future use
