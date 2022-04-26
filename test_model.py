@@ -4,6 +4,7 @@ from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
 from Models import Models
+import matplotlib.pyplot as plt
 
 from Confusion_matrix_graphic import plot_confusion_matrix
 
@@ -68,12 +69,34 @@ def main():
             # print(f'predicted_labels: {predicted_labels}')
 
             test_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
-            print(f'Correct predictions in batch: {test_score}\n')
+            #print(f'Correct predictions in batch: {test_score}\n')
             
             # calculate confusion matrix elements
             for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
+            #print some examples of first batch
+            if n == 0:
+
+                num_examples = 10
+                #make random list of example index's
+                examples_index = torch.Tensor(num_examples).random_(0,len(label_batch)) 
+                fig = plt.figure(figsize=(20, 7))                               
+                rows= 2
+                columns = 5
+                i = 1
+                #for each index grab it's image and plot
+                for index in examples_index:                 
+                    one_img = img_batch[index, 0, :, :]
+                    fig.add_subplot(rows, columns, i)
+                    plt.imshow(one_img)
+                    plt.axis('off')
+                    # plot w labels and predicted labels as titles
+                    plt.title(f'Predicted label: {torch.argmax(label_batch[i, :])} True Label: {torch.argmax(predicted_labels[i, :])}')
+                    i += 1
+
+                
+                            
             n += len(label_batch)
         
         # print(f'\nn = {n}')
