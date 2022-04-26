@@ -80,6 +80,8 @@ def main():
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
 
+        print(f'shape of image batch {img_batch.size()}')
+
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
 
