@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 import torch.nn.functional as F
 
 
-def create_dataset(audio_input_path, json_path):
+def create_dataset(audio_input_path, json_path, n_mels, n_fft, h_l):
     # Load JSON file data
     file = open(json_path, 'rb')
     metadata = json.load(file)
@@ -23,7 +23,8 @@ def create_dataset(audio_input_path, json_path):
         # load the waveform y and sampling rate sr
         y, sr = librosa.load(f'{audio_input_path}{file}', sr=None)
         # convert to 2 dimensional spectogram format
-        spectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000, hop_length=502)
+        spectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, n_fft=n_fft,
+                                                     fmax=8000, hop_length=h_l)
         # Convert raw power to dB
         S_dB = librosa.power_to_db(spectrogram, ref=np.max)
         data.append(S_dB)

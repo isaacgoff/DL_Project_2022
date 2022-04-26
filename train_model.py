@@ -24,6 +24,10 @@ def main():
     parser.add_argument('--shuffle', type=str, default='True')
     parser.add_argument('--label_smoothing_factor', type=float, default=0.0)
     parser.add_argument('--weight_decay', type=float, default=0.0)
+    parser.add_argument('--num_epochs', type=int, default=20)
+    parser.add_argument('--num_mels', type=int, default=128)
+    parser.add_argument('--num_fft', type=int, default=20)
+    parser.add_argument('--hop_len', type=int, default=20)
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
@@ -52,8 +56,8 @@ def main():
 
     start = datetime.now()
     # Create datasets
-    tng_dataset = create_dataset(audio_input_path_tng, json_path_tng)
-    val_dataset = create_dataset(audio_input_path_val, json_path_val)
+    tng_dataset = create_dataset(audio_input_path_tng, json_path_tng, args.num_mels, args.num_fft, args.hop_len)
+    val_dataset = create_dataset(audio_input_path_val, json_path_val, args.num_mels, args.num_fft, args.hop_len)
 
     # Create Data Loaders
     tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=shuffle)
@@ -170,7 +174,7 @@ def main():
     print(f'\nBest Epoch: {best_epoch}')
     print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
           f'// Validation Acc = {epoch_results["val_acc"]}')
-    plot_model_results(epoch_results)
+    plot_model_results(epoch_results, args.model_name)
 
     # Save the best model state for future use
     if save_trained_model:
