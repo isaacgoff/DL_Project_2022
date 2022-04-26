@@ -93,7 +93,7 @@ def main():
                     plt.imshow(one_img.cpu())
                     plt.axis('off')
                     # plot w labels and predicted labels as titles
-                    plt.title(f'Predicted label: {num_to_instrument(torch.argmax(label_batch[i, :]))} True Label: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
+                    plt.title(f'Predicted: {num_to_instrument(torch.argmax(label_batch[i, :]))} Label: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
                     i += 1
 
                 
