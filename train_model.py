@@ -178,7 +178,6 @@ def main():
     # print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
     #       f'// Validation Acc = {epoch_results["val_acc"]}')
     # plot_model_results(epoch_results)
-    plot_test(epoch_results)
 
     # Save the best model state for future use
     if save_trained_model:
