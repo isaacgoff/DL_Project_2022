@@ -96,7 +96,7 @@ def main():
                     ax = plt.gca()
                     ax.invert_yaxis()
                     # plot w labels and predicted labels as titles
-                    plt.title(f'Predicted: {num_to_instrument(torch.argmax(label_batch[i, :]))}   Label: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
+                    plt.title(f'Predicted: {num_to_instrument(torch.argmax(label_batch[i, :]))}   True: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
                     i += 1
 
                 #add common labels
