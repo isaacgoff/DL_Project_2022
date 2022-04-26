@@ -82,7 +82,7 @@ def main():
                 #make random list of example index's
                 examples_index = torch.Tensor(num_examples).random_(0,len(label_batch)) 
                 fig = plt.figure(figsize=(22, 17))                               
-                rows= 2
+                rows= 4
                 columns = 5
                 i = 1
                 #for each index grab it's image and plot
