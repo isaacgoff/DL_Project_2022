@@ -28,5 +28,6 @@ def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
 
 def num_to_instrument(num):
     classes = ('bass', 'brass', 'flute', 'guitar', 'keyboard', 'mallet', 'organ', 'reed', 'string', 'synth_lead' 'vocal')
+    print(num)
     instrument_name = classes[num]
     return instrument_name
