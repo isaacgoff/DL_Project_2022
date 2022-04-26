@@ -14,7 +14,7 @@ def plot_model_results(epoch_results):
         val_acc.append(epoch["val_acc"])
 
     # Code to plot loss values by epoch
-    fig, ax = plt.subplot(1, 1)
+    ax = plt.subplot(111)
     ax.plot(epochs, tng_losses, label=f'Training Loss')
     ax.plot(epochs, val_losses, label=f'Validation Loss')
     ax.plot(epochs, tng_acc, label=f'Training Accuracy')
