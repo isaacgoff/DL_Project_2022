@@ -25,6 +25,9 @@ def main():
     parser.add_argument('--label_smoothing_factor', type=float, default=0.0)
     parser.add_argument('--weight_decay', type=float, default=0.0)
     parser.add_argument('--optimizer', type=str, default='SGD')
+    parser.add_argument('--num_mels', type=int, default=128)
+    parser.add_argument('--num_fft', type=int, default=1)
+    parser.add_argument('--hop_len', type=int, default=502)
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':

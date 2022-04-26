@@ -18,10 +18,10 @@ def main():
 
     start = datetime.now()
     # Create training dataset
-    train_set_files = SmallTrainSet(10000, path_json)
+    train_set_files = SmallTrainSet(50000, path_json)
     sample_list = train_set_files.sample_list
     for file in sample_list:
-        shutil.copy(f'{path_audio_inputs}{file}', f'data/nsynth-train/small_audio/{file}')
+        shutil.copy(f'{path_audio_inputs}{file}', f'data/nsynth-train/medium_audio/{file}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
