@@ -72,9 +72,9 @@ def main():
     net.apply(init_weights)
 
     # Choose optimizer based on input
-    if args.optimizer.tolower() == 'sgd':
+    if args.optimizer.lower() == 'sgd':
         optimizer = torch.optim.SGD(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-    elif args.optimizer.tolower() == 'adam':
+    elif args.optimizer.lower() == 'adam':
         optimizer = torch.optim.Adam(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     
     # Initialise loss function for training
