@@ -7,6 +7,7 @@ from Models import Models
 import matplotlib.pyplot as plt
 
 from Confusion_matrix_graphic import plot_confusion_matrix
+from Confusion_matrix_graphic import num_to_instrument
 
 
 def main():
@@ -92,7 +93,7 @@ def main():
                     plt.imshow(one_img.cpu())
                     plt.axis('off')
                     # plot w labels and predicted labels as titles
-                    plt.title(f'Predicted label: {torch.argmax(label_batch[i, :])} True Label: {torch.argmax(predicted_labels[i, :])}')
+                    plt.title(f'Predicted label: {num_to_instrument(torch.argmax(label_batch[i, :]))} True Label: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
                     i += 1
 
                 
