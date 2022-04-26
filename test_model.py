@@ -6,6 +6,7 @@ from create_dataset import create_dataset
 from Models import Models
 import matplotlib.pyplot as plt
 
+
 from Confusion_matrix_graphic import plot_confusion_matrix
 from Confusion_matrix_graphic import num_to_instrument
 
@@ -63,14 +64,16 @@ def main():
         for (img_batch, label_batch) in test_dataloader:
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
-            # print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
+            #print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
             img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
+            #plt.imshow(img_batch)
             predicted_labels = model(img_batch)
-            # print(f'predicted_labels: {predicted_labels}')
+            #print(f'predicted_labels: {predicted_labels}')
 
             test_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
             #print(f'Correct predictions in batch: {test_score}\n')
+
             
             # calculate confusion matrix elements
             for i in range(len(label_batch)):
@@ -116,6 +119,8 @@ def main():
 
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
+
+        print(f'shape of image batch {img_batch.size()}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')

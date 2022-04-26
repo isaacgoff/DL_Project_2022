@@ -57,8 +57,9 @@ def main():
     val_dataset = create_dataset(audio_input_path_val, json_path_val)
 
     # Create Data Loaders
-    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=shuffle)
-    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=shuffle)
+
+    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=True)
 
     print(f'\nDatasets created in {datetime.now()-start}')
 
