@@ -24,10 +24,7 @@ def main():
     parser.add_argument('--shuffle', type=str, default='True')
     parser.add_argument('--label_smoothing_factor', type=float, default=0.0)
     parser.add_argument('--weight_decay', type=float, default=0.0)
-    parser.add_argument('--num_epochs', type=int, default=20)
-    parser.add_argument('--num_mels', type=int, default=128)
-    parser.add_argument('--num_fft', type=int, default=20)
-    parser.add_argument('--hop_len', type=int, default=20)
+    parser.add_argument('--optimizer', type=str, default='SGD')
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
@@ -60,8 +57,9 @@ def main():
     val_dataset = create_dataset(audio_input_path_val, json_path_val, args.num_mels, args.num_fft, args.hop_len)
 
     # Create Data Loaders
-    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=shuffle)
-    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=shuffle)
+
+    tng_dataloader = DataLoader(tng_dataset, batch_size=args.batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=True)
 
     print(f'\nDatasets created in {datetime.now()-start}')
 
@@ -74,7 +72,13 @@ def main():
 
     net.apply(init_weights)
 
-    optimizer = torch.optim.SGD(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    # Choose optimizer based on input
+    if args.optimizer.lower() == 'sgd':
+        optimizer = torch.optim.SGD(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    elif args.optimizer.lower() == 'adam':
+        optimizer = torch.optim.Adam(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+
+    # Initialise loss function for training
     loss = nn.CrossEntropyLoss(label_smoothing=args.label_smoothing_factor)
 
     epoch = 0
@@ -174,7 +178,7 @@ def main():
     print(f'\nBest Epoch: {best_epoch}')
     print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
           f'// Validation Acc = {epoch_results["val_acc"]}')
-    plot_model_results(epoch_results, args.model_name)
+    plot_model_results(epoch_results)
 
     # Save the best model state for future use
     if save_trained_model:

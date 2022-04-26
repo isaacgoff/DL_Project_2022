@@ -4,8 +4,11 @@ from datetime import datetime
 from torch.utils.data import DataLoader
 from create_dataset import create_dataset
 from Models import Models
+import matplotlib.pyplot as plt
+
 
 from Confusion_matrix_graphic import plot_confusion_matrix
+from Confusion_matrix_graphic import num_to_instrument
 
 
 def main():
@@ -61,19 +64,50 @@ def main():
         for (img_batch, label_batch) in test_dataloader:
             img_batch = img_batch.to(device)
             label_batch = label_batch.to(device)
-            # print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
+            #print(f'img_batch:\n{img_batch}\nlabel_batch:\n{label_batch}')
 
             img_batch = img_batch.reshape(img_batch.shape[0], 1, img_batch.shape[1], img_batch.shape[2])
+            #plt.imshow(img_batch)
             predicted_labels = model(img_batch)
-            # print(f'predicted_labels: {predicted_labels}')
+            #print(f'predicted_labels: {predicted_labels}')
 
             test_score += (predicted_labels.argmax(axis=1) == label_batch.argmax(axis=1)).sum().item()
-            print(f'Correct predictions in batch: {test_score}\n')
+            #print(f'Correct predictions in batch: {test_score}\n')
+
             
             # calculate confusion matrix elements
             for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
+            #print some examples of first batch
+            if n == 0:
+
+                num_examples = 20
+                #make random list of example index's
+                examples_index = torch.Tensor(num_examples).random_(0,len(label_batch)) 
+                fig = plt.figure(figsize=(22, 17))                               
+                rows= 4
+                columns = 5
+                i = 1
+                #for each index grab it's image and plot
+                for index in examples_index:                 
+                    one_img = img_batch[index.long(), 0, :, :]
+                    fig.add_subplot(rows, columns, i)
+                    plt.imshow(one_img.cpu())
+                    plt.axis('off')
+                    #flip axis so freuency on bottom
+                    ax = plt.gca()
+                    ax.invert_yaxis()
+                    # plot w labels and predicted labels as titles
+                    plt.title(f'Predicted: {num_to_instrument(torch.argmax(label_batch[i, :]))}   True: {num_to_instrument(torch.argmax(predicted_labels[i, :]))}')
+                    i += 1
+
+                #add common labels
+                fig.add_subplot(111, frame_on=False)
+                plt.tick_params(labelcolor="none", bottom=False, left=False)
+                plt.xlabel("Time")
+                plt.ylabel("Frequency")                
+                            
             n += len(label_batch)
         
         # print(f'\nn = {n}')
@@ -85,6 +119,8 @@ def main():
 
         test_score = test_score / n
         print(f'Final test accuracy: {test_score}')
+
+        print(f'shape of image batch {img_batch.size()}')
 
     end = datetime.now()
     print(f'\nelapsed time: {end - start}')
