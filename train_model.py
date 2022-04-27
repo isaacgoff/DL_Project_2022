@@ -26,7 +26,7 @@ def main():
     parser.add_argument('--weight_decay', type=float, default=0.0)
     parser.add_argument('--optimizer', type=str, default='SGD')
     parser.add_argument('--num_mels', type=int, default=128)
-    parser.add_argument('--num_fft', type=int, default=1)
+    parser.add_argument('--num_fft', type=int, default=2048)
     parser.add_argument('--hop_len', type=int, default=502)
     args = parser.parse_args()
 
@@ -179,8 +179,9 @@ def main():
 
     # Call function to generate performance data
     print(f'\nBest Epoch: {best_epoch}')
-    print(f'Training Loss = {epoch_results["tng_loss"]} // Training Acc = {epoch_results["tng_acc"]} '
-          f'// Validation Acc = {epoch_results["val_acc"]}')
+    print(f'Training Loss = {epoch_results[best_epoch]["tng_loss"]} // '
+          f'Training Acc = {epoch_results[best_epoch]["tng_acc"]} '
+          f'// Validation Acc = {epoch_results[best_epoch]["val_acc"]}')
     plot_model_results(epoch_results)
 
     # Save the best model state for future use
