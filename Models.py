@@ -9,7 +9,7 @@ import torchvision.models as models
 #   * ResNet18
 class Models():
     def __init__(self, model_name: str):
-        self.model_list = ['Basic_4_Layer_CNN', 'Alex_Net', 'VGG_16', 'Res_Net_18', 'Dense_Net_161', 'Inception_v3']
+        self.model_list = ['basic_4_layer_cnn', 'alex_net', 'vgg_16', 'res_net_18', 'dense_net_161', 'inception_v3']
         self.input_model = model_name
         self.num_output_classes = 11
         if self.input_model.lower() not in self.model_list:
