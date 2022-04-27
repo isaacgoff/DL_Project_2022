@@ -30,4 +30,3 @@ def plot_model_results(epoch_results, model_name):
     # plt.show()
     plt.savefig(f'/content/drive/MyDrive/DL_data/Results/{model_name}-plot.png', dpi=150, bbox_inches='tight', facecolor='gray')
     plt.clf()
-    return ax
