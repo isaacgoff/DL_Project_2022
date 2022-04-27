@@ -33,37 +33,37 @@ def create_dataset_fast(audio_input_path, json_path, n_mels, n_fft, h_l):
         labels.append(metadata[sample_list[i+9][:-4]]['instrument_family'])
 
         # load the waveform y and sampling rate sr
-        y_0, sr = librosa.load(f'{audio_input_path}{sample_list[i]}', sr=None)
-        y_1, sr = librosa.load(f'{audio_input_path}{sample_list[i+1]}', sr=None)
-        y_2, sr = librosa.load(f'{audio_input_path}{sample_list[i+2]}', sr=None)
-        y_3, sr = librosa.load(f'{audio_input_path}{sample_list[i+3]}', sr=None)
-        y_4, sr = librosa.load(f'{audio_input_path}{sample_list[i+4]}', sr=None)
-        y_5, sr = librosa.load(f'{audio_input_path}{sample_list[i+5]}', sr=None)
-        y_6, sr = librosa.load(f'{audio_input_path}{sample_list[i+6]}', sr=None)
-        y_7, sr = librosa.load(f'{audio_input_path}{sample_list[i+7]}', sr=None)
-        y_8, sr = librosa.load(f'{audio_input_path}{sample_list[i+8]}', sr=None)
-        y_9, sr = librosa.load(f'{audio_input_path}{sample_list[i+9]}', sr=None)
+        y_0, sr_0 = librosa.load(f'{audio_input_path}{sample_list[i]}', sr=None)
+        y_1, sr_1 = librosa.load(f'{audio_input_path}{sample_list[i+1]}', sr=None)
+        y_2, sr_2 = librosa.load(f'{audio_input_path}{sample_list[i+2]}', sr=None)
+        y_3, sr_3 = librosa.load(f'{audio_input_path}{sample_list[i+3]}', sr=None)
+        y_4, sr_4 = librosa.load(f'{audio_input_path}{sample_list[i+4]}', sr=None)
+        y_5, sr_5 = librosa.load(f'{audio_input_path}{sample_list[i+5]}', sr=None)
+        y_6, sr_6 = librosa.load(f'{audio_input_path}{sample_list[i+6]}', sr=None)
+        y_7, sr_7 = librosa.load(f'{audio_input_path}{sample_list[i+7]}', sr=None)
+        y_8, sr_8 = librosa.load(f'{audio_input_path}{sample_list[i+8]}', sr=None)
+        y_9, sr_9 = librosa.load(f'{audio_input_path}{sample_list[i+9]}', sr=None)
 
         # convert to 2 dimensional spectogram format
-        spectrogram_0 = librosa.feature.melspectrogram(y=y_0, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_0 = librosa.feature.melspectrogram(y=y_0, sr=sr_0, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_1 = librosa.feature.melspectrogram(y=y_1, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_1 = librosa.feature.melspectrogram(y=y_1, sr=sr_1, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_2 = librosa.feature.melspectrogram(y=y_2, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_2 = librosa.feature.melspectrogram(y=y_2, sr=sr_2, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_3 = librosa.feature.melspectrogram(y=y_3, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_3 = librosa.feature.melspectrogram(y=y_3, sr=sr_3, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_4 = librosa.feature.melspectrogram(y=y_4, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_4 = librosa.feature.melspectrogram(y=y_4, sr=sr_4, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_5 = librosa.feature.melspectrogram(y=y_5, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_5 = librosa.feature.melspectrogram(y=y_5, sr=sr_5, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_6 = librosa.feature.melspectrogram(y=y_6, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_6 = librosa.feature.melspectrogram(y=y_6, sr=sr_6, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_7 = librosa.feature.melspectrogram(y=y_7, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_7 = librosa.feature.melspectrogram(y=y_7, sr=sr_7, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_8 = librosa.feature.melspectrogram(y=y_8, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_8 = librosa.feature.melspectrogram(y=y_8, sr=sr_8, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
-        spectrogram_9 = librosa.feature.melspectrogram(y=y_9, sr=sr, n_mels=n_mels, n_fft=n_fft,
+        spectrogram_9 = librosa.feature.melspectrogram(y=y_9, sr=sr_9, n_mels=n_mels, n_fft=n_fft,
                                                      fmax=8000, hop_length=h_l)
 
         # Convert raw power to dB
