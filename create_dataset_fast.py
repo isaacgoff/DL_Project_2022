@@ -98,6 +98,7 @@ def create_dataset_fast(audio_input_path, json_path, n_mels, n_fft, h_l):
         S_dB_0 = librosa.power_to_db(spectrogram_0, ref=np.max)
         data.append(S_dB_0)
 
+    print(f'number of spectrograms: {len(labels)}')
     data_np = torch.tensor(np.stack(data))
     # labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11)
     labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11).type(torch.float32)
