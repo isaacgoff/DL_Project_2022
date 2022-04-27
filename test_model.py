@@ -82,8 +82,8 @@ def main():
             for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
-            #print some examples of first batch
-            if n == 0:
+            #print some examples from a random batch
+            if n == int(torch.rand(1)*10):
 
                 num_examples = 20
                 #make random list of example index's
