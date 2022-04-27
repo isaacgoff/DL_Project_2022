@@ -28,7 +28,7 @@ class Models():
             model.fc = nn.Linear(in_features=512, out_features=self.num_output_classes, bias=True)
             model.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
         elif self.input_model.lower() == 'dense_net_121':
-            model = models.densenet161(False, False)
+            model = models.densenet121(False, False)
             model.classifier = nn.Linear(in_features=1024, out_features=11, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
         elif self.input_model.lower() == 'vgg13_bn':
