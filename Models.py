@@ -9,7 +9,7 @@ import torchvision.models as models
 #   * ResNet18
 class Models():
     def __init__(self, model_name: str):
-        self.model_list = ['basic_4_layer_cnn', 'alex_net', 'res_net_18', 'dense_net_161']
+        self.model_list = ['basic_4_layer_cnn', 'alex_net', 'res_net_18', 'dense_net_161', 'vgg13_bn']
         self.input_model = model_name
         self.num_output_classes = 11
         if self.input_model.lower() not in self.model_list:
@@ -30,6 +30,10 @@ class Models():
             model = models.densenet161(False, False)
             model.classifier = nn.Linear(in_features=2208, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 96, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+        elif self.input_model.lower() == 'vgg13_bn':
+            model = models.vgg13_bn(False, False)
+            model.features[0] = nn.Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
         return model
 
 
