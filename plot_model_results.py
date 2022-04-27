@@ -5,7 +5,8 @@ import random
 
 def plot_model_results(epoch_results, model_name):
     if model_name == 'unspecified':
-        model_name = f'unspecified-{random.randint(0,999)}'
+        plot_id = random.randint(0,999)
+        model_name = f'unspecified-{plot_id}'
 
     # Plot training and validation loss by epoch
     # Create lists for plotting
@@ -32,3 +33,5 @@ def plot_model_results(epoch_results, model_name):
     plt.savefig(f'/content/drive/MyDrive/DL_data/Results/{model_name}-plot.png', dpi=150, bbox_inches='tight',
                 facecolor='gray')
     # plt.clf()
+    print(f'results saved as: {model_name}')
+    # plt.savefig(f'/data/{model_name}-plot.png', dpi=150, bbox_inches='tight', facecolor='gray')
