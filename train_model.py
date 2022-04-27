@@ -184,6 +184,8 @@ def main():
           f'Training Acc = {epoch_results[best_epoch]["tng_acc"]} '
           f'// Validation Acc = {epoch_results[best_epoch]["val_acc"]}')
     graph = plot_model_results(epoch_results, args.model_name)
+    print(graph)
+    plt.show()
 
     # Save the best model state for future use
     if save_trained_model:
