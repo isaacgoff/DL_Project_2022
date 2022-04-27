@@ -19,7 +19,7 @@ def create_dataset_fast(audio_input_path, json_path, n_mels, n_fft, h_l):
     labels = []
     # Loop through files and store spectrogram and instrument family for each sample
     i = 0
-    for i in range(len(sample_list)):
+    while i < len(sample_list)-10:
         # Append 10 labels
         labels.append(metadata[sample_list[i][:-4]]['instrument_family'])
         labels.append(metadata[sample_list[i+1][:-4]]['instrument_family'])
@@ -89,6 +89,14 @@ def create_dataset_fast(audio_input_path, json_path, n_mels, n_fft, h_l):
         data.append(S_dB_9)
 
         i += 10
+
+    for file in sample_list[i:]:
+        labels.append(metadata[file[:-4]]['instrument_family'])
+        y_0, sr = librosa.load(f'{audio_input_path}{file}', sr=None)
+        spectrogram_0 = librosa.feature.melspectrogram(y=y_0, sr=sr, n_mels=n_mels, n_fft=n_fft,
+                                                       fmax=8000, hop_length=h_l)
+        S_dB_0 = librosa.power_to_db(spectrogram_0, ref=np.max)
+        data.append(S_dB_0)
 
     data_np = torch.tensor(np.stack(data))
     # labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11)
