@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import torch
+import random
 
 
 def plot_model_results(epoch_results, model_name):
     if model_name == 'unspecified':
-        model_name = f'unspecified-{torch.randn()}'
+        model_name = f'unspecified-{random.randint(0,999)}'
 
     # Plot training and validation loss by epoch
     # Create lists for plotting
