@@ -61,7 +61,6 @@ def main():
     with torch.no_grad():
         model.eval()
         n = 0
-        random_batch_selection = int(len(test_dataloader) / torch.rand(1)*10)
         confusion_matrix = torch.zeros(11,11)
 
         for (img_batch, label_batch) in test_dataloader:
@@ -82,8 +81,8 @@ def main():
             for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
-            #print some examples from a random batch
-            if n == random_batch_selection:
+            #print some examples from the 1st batch
+            if n == 0:
 
                 num_examples = 20
                 #make random list of example index's
