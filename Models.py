@@ -12,7 +12,7 @@ class Models():
         self.model_list = ['Basic_4_Layer_CNN', 'Alex_Net', 'VGG_16', 'Res_Net_18', 'Dense_Net_161', 'Inception_v3']
         self.input_model = model_name
         self.num_output_classes = 11
-        if self.input_model not in self.model_list:
+        if self.input_model.lower() not in self.model_list:
             raise ValueError('Model list does not contain model "%s"' %(model_name))
     
     def choose_model(self):
