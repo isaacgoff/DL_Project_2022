@@ -9,7 +9,7 @@ import torchvision.models as models
 #   * ResNet18
 class Models():
     def __init__(self, model_name: str):
-        self.model_list = ['basic_4_layer_cnn', 'alex_net', 'vgg_16', 'res_net_18', 'dense_net_161', 'inception_v3']
+        self.model_list = ['basic_4_layer_cnn', 'alex_net', 'res_net_18', 'dense_net_161']
         self.input_model = model_name
         self.num_output_classes = 11
         if self.input_model.lower() not in self.model_list:
@@ -22,10 +22,6 @@ class Models():
             model = models.alexnet(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
-        elif self.input_model.lower() == 'vgg_16':
-            model = models.vgg16(False, False)
-            model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
-            model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
         elif self.input_model.lower() == 'res_net_18':
             model = models.resnet18(False, False)
             model.fc = nn.Linear(in_features=512, out_features=self.num_output_classes, bias=True)
@@ -34,10 +30,6 @@ class Models():
             model = models.densenet161(False, False)
             model.classifier = nn.Linear(in_features=2208, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 96, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
-        elif self.input_model.lower() == 'inception_v3':
-            model = models.inception_v3(False, False)
-            model.fc = nn.Linear(in_features=2048, out_features=self.num_output_classes, bias=True)
-            model.Conv2d_1a_3x3.conv = nn.Conv2d(1, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
         return model
 
 

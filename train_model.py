@@ -28,7 +28,7 @@ def main():
     parser.add_argument('--optimizer', type=str, default='SGD')
     parser.add_argument('--num_mels', type=int, default=128)
     parser.add_argument('--num_fft', type=int, default=2048)
-    parser.add_argument('--hop_len', type=int, default=502)
+    parser.add_argument('--hop_len', type=int, default=512)
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
