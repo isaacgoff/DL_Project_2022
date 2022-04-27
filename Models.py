@@ -22,19 +22,19 @@ class Models():
             model = models.alexnet(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
-        elif self.input_model == 'vgg_16':
+        elif self.input_model.lower() == 'vgg_16':
             model = models.vgg16(False, False)
             model.classifier[6] = nn.Linear(in_features=4096, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
-        elif self.input_model == 'res_net_18':
+        elif self.input_model.lower() == 'res_net_18':
             model = models.resnet18(False, False)
             model.fc = nn.Linear(in_features=512, out_features=self.num_output_classes, bias=True)
             model.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
-        elif self.input_model == 'dense_net_161':
+        elif self.input_model.lower() == 'dense_net_161':
             model = models.densenet161(False, False)
             model.classifier = nn.Linear(in_features=2208, out_features=self.num_output_classes, bias=True)
             model.features[0] = nn.Conv2d(1, 96, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
-        elif self.input_model == 'inception_v3':
+        elif self.input_model.lower() == 'inception_v3':
             model = models.inception_v3(False, False)
             model.fc = nn.Linear(in_features=2048, out_features=self.num_output_classes, bias=True)
             model.Conv2d_1a_3x3.conv = nn.Conv2d(1, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
