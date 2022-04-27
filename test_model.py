@@ -18,6 +18,9 @@ def main():
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--model_name', type=str,  default='billy_joel_cnn')
     parser.add_argument('--model_type', type=str, default='Basic_4_Layer_CNN')
+    parser.add_argument('--num_mels', type=int, default=128)
+    parser.add_argument('--num_fft', type=int, default=2048)
+    parser.add_argument('--hop_len', type=int, default=502)
     args = parser.parse_args()
 
     # Dataset and model paths
@@ -41,7 +44,7 @@ def main():
     start = datetime.now()
 
     # Create dataset
-    test_dataset = create_dataset(audio_input_path_test, json_path_test)
+    test_dataset = create_dataset(audio_input_path_test, json_path_test, args.num_mels, args.num_fft, args.hop_len)
 
     # Create Data Loader
     test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
