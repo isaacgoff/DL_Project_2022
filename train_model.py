@@ -7,6 +7,7 @@ from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
 from plot_model_results import plot_model_results
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -182,7 +183,7 @@ def main():
     print(f'Training Loss = {epoch_results[best_epoch]["tng_loss"]} // '
           f'Training Acc = {epoch_results[best_epoch]["tng_acc"]} '
           f'// Validation Acc = {epoch_results[best_epoch]["val_acc"]}')
-    plot_model_results(epoch_results)
+    graph = plot_model_results(epoch_results)
 
     # Save the best model state for future use
     if save_trained_model:
