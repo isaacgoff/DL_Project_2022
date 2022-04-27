@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 import torch.nn.functional as F
 
 
-def create_dataset(audio_input_path, json_path, n_mels, n_fft, h_l):
+def create_dataset_fast(audio_input_path, json_path, n_mels, n_fft, h_l):
     # Load JSON file data
     file = open(json_path, 'rb')
     metadata = json.load(file)
