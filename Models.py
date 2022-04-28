@@ -62,9 +62,9 @@ class Basic_4_Layer_CNN(nn.Module):
             #fully connected layers
             nn.Flatten(),
             nn.Linear(30 * 8 * 8, 200), nn.ReLU(),
-            #nn.Dropout(0.5),
+            nn.Dropout(0.4),
             nn.Linear(200, 100), nn.ReLU(),
-            #nn.Dropout(0.5),
+            nn.Dropout(0.2),
             nn.Linear(100, 11)
                                             # Because we have 11 output classes
         )
