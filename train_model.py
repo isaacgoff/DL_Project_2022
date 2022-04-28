@@ -27,12 +27,26 @@ def main():
     parser.add_argument('--num_mels', type=int, default=64)
     parser.add_argument('--num_fft', type=int, default=2048)
     parser.add_argument('--hop_len', type=int, default=1000)
+    parser.add_argument('--sources', type=str, default='aes')
     args = parser.parse_args()
 
     if args.save_model.lower() == 'true':
         save_trained_model = True
     else:
         save_trained_model = False
+
+    if args.sources.lower() == 'a':
+        sources = [0]
+    elif args.sources.lower() == 'ae':
+        sources = [0,1]
+    elif args.sources.lower() == 'aes':
+        sources = [0,1,2]
+    elif args.sources.lower() == 'as':
+        sources = [0,2]
+    elif args.sources.lower() == 'e':
+        sources = [1]
+    elif args.sources.lower() == 's':
+        sources = [2]
 
     drive_path = '/content/drive/MyDrive/DL_data/'
     json_path_tng = f'{drive_path}nsynth-train/examples.json'
@@ -50,8 +64,8 @@ def main():
 
     start = datetime.now()
     # Create datasets
-    tng_dataset = create_dataset(audio_input_path_tng, json_path_tng, args.num_mels, args.num_fft, args.hop_len)
-    val_dataset = create_dataset(audio_input_path_val, json_path_val, args.num_mels, args.num_fft, args.hop_len)
+    tng_dataset = create_dataset(audio_input_path_tng, json_path_tng, args.num_mels, args.hop_len, sources)
+    val_dataset = create_dataset(audio_input_path_val, json_path_val, args.num_mels, args.hop_len, sources)
 
     # Create Data Loaders
 

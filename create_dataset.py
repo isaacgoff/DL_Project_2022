@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 import torch.nn.functional as F
 
 
-def create_dataset(audio_input_path, json_path, n_mels, n_fft, h_l):
+def create_dataset(audio_input_path, json_path, n_mels, h_l, sources, n_fft=2048):
     # Load JSON file data
     file = open(json_path, 'rb')
     metadata = json.load(file)
@@ -19,15 +19,16 @@ def create_dataset(audio_input_path, json_path, n_mels, n_fft, h_l):
     labels = []
     # Loop through files and store spectrogram and instrument family for each sample
     for file in sample_list:
-        labels.append(metadata[file[:-4]]['instrument_family'])
-        # load the waveform y and sampling rate sr
-        y, sr = librosa.load(f'{audio_input_path}{file}', sr=None)
-        # convert to 2 dimensional spectogram format
-        spectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, n_fft=n_fft,
-                                                     fmax=8000, hop_length=h_l)
-        # Convert raw power to dB
-        S_dB = librosa.power_to_db(spectrogram, ref=np.max)
-        data.append(S_dB)
+        if metadata[file[:-4]]['instrument_source'] in sources:
+            labels.append(metadata[file[:-4]]['instrument_family'])
+            # load the waveform y and sampling rate sr
+            y, sr = librosa.load(f'{audio_input_path}{file}', sr=None)
+            # convert to 2 dimensional spectogram format
+            spectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, n_fft=n_fft,
+                                                         fmax=8000, hop_length=h_l)
+            # Convert raw power to dB
+            S_dB = librosa.power_to_db(spectrogram, ref=np.max)
+            data.append(S_dB)
 
     data_np = torch.tensor(np.stack(data))
     labels = F.one_hot(torch.tensor(np.stack(labels)), num_classes=11).type(torch.float32)

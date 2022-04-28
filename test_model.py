@@ -21,7 +21,21 @@ def main():
     parser.add_argument('--num_mels', type=int, default=64)
     parser.add_argument('--num_fft', type=int, default=2048)
     parser.add_argument('--hop_len', type=int, default=1000)
+    parser.add_argument('--sources', type=str, default='aes')
     args = parser.parse_args()
+
+    if args.sources.lower() == 'a':
+        sources = [0]
+    elif args.sources.lower() == 'ae':
+        sources = [0,1]
+    elif args.sources.lower() == 'aes':
+        sources = [0,1,2]
+    elif args.sources.lower() == 'as':
+        sources = [0,2]
+    elif args.sources.lower() == 'e':
+        sources = [1]
+    elif args.sources.lower() == 's':
+        sources = [2]
 
     # Dataset and model paths
     drive_path = '/content/drive/MyDrive/DL_data/'
@@ -44,7 +58,7 @@ def main():
     start = datetime.now()
 
     # Create dataset
-    test_dataset = create_dataset(audio_input_path_test, json_path_test, args.num_mels, args.num_fft, args.hop_len)
+    test_dataset = create_dataset(audio_input_path_test, json_path_test, args.num_mels, args.hop_len, sources)
 
     # Create Data Loader
     test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
