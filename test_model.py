@@ -14,7 +14,7 @@ from Confusion_matrix_graphic import num_to_instrument
 def main():
     parser = argparse.ArgumentParser(description='Test the individual instrument identification model')
     parser.add_argument('-f')  # Required for argument parser to work in Colab
-    parser.add_argument('--test_folder', type=str, default='small_audio/')
+    parser.add_argument('--test_folder', type=str, default='audio/')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--model_name', type=str,  default='billy_joel_cnn')
     parser.add_argument('--model_type', type=str, default='Basic_4_Layer_CNN')
@@ -61,7 +61,6 @@ def main():
     with torch.no_grad():
         model.eval()
         n = 0
-
         confusion_matrix = torch.zeros(11,11)
 
         for (img_batch, label_batch) in test_dataloader:
@@ -82,8 +81,8 @@ def main():
             for i in range(len(label_batch)):
               confusion_matrix[torch.argmax(label_batch[i, :])][torch.argmax(predicted_labels[i, :])] += 1
 
-            #print some examples from a random batch
-            if n == int(torch.rand(1)*10):
+            #print some examples from the 1st batch
+            if n == 0:
 
                 num_examples = 20
                 #make random list of example index's
