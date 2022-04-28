@@ -48,23 +48,23 @@ class Basic_4_Layer_CNN(nn.Module):
             nn.Conv2d(6, 16, kernel_size=5, padding = 2), nn.ReLU(),             #Dimension now 16 of 64 x 64  
             nn.Conv2d(16, 16, kernel_size=5, padding = 2), nn.ReLU(),             #Dimension now 16 of 64 x 64
             nn.MaxPool2d(kernel_size=2, stride=2),                               #Dimension now 16 of 32 x 32
-            nn.Dropout(0.1),
+            #nn.Dropout(0.1),
             #smaller kernel CNN layers
             nn.Conv2d(16, 24, kernel_size=3, padding = 1), nn.ReLU(),            #Dimension now 24 of 32 x 32                                                                     #Dimension now 16 of
             nn.Conv2d(24, 24, kernel_size=3, padding = 1), nn.ReLU(),            #Dimension now 24 of 32 x 32
-            nn.Dropout(0.1),
+            #nn.Dropout(0.1),
             nn.MaxPool2d(kernel_size=2, stride=2),                               #Dimension now 24 of 16 x 16
             nn.Conv2d(24, 30, kernel_size=3, padding = 1), nn.ReLU(),            #Dimension now 30 of 16 x 16                                                                     #Dimension now 16 of
             nn.Conv2d(30, 30, kernel_size=3, padding = 1), nn.ReLU(),            #Dimension now 30 of 16 x 16
             nn.Conv2d(30, 30, kernel_size=3, padding = 1), nn.ReLU(),            #Dimension now 30 of 16 x 16
             nn.MaxPool2d(kernel_size=2, stride=2),                               #Dimension now 30 of 8  x 8
-            nn.Dropout(0.2),
+            #nn.Dropout(0.2),
             #fully connected layers
             nn.Flatten(),
             nn.Linear(30 * 8 * 8, 200), nn.ReLU(),
-            nn.Dropout(0.5),
+            #nn.Dropout(0.5),
             nn.Linear(200, 100), nn.ReLU(),
-            nn.Dropout(0.5),
+            #nn.Dropout(0.5),
             nn.Linear(100, 11)
                                             # Because we have 11 output classes
         )
