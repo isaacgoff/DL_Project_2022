@@ -39,10 +39,10 @@ def main():
 
     # Dataset and model paths
     drive_path = '/content/drive/MyDrive/DL_data/'
-    # json_path_test = f'{drive_path}nsynth-test/examples.json'
-    # audio_input_path_test = f'{drive_path}nsynth-test/{args.test_folder}'
-    json_path_test = f'{drive_path}nsynth-valid/examples.json'
-    audio_input_path_test = f'{drive_path}nsynth-valid/{args.test_folder}'
+    json_path_test = f'{drive_path}nsynth-test/examples.json'
+    audio_input_path_test = f'{drive_path}nsynth-test/{args.test_folder}'
+    # json_path_test = f'{drive_path}nsynth-valid/examples.json'
+    # audio_input_path_test = f'{drive_path}nsynth-valid/{args.test_folder}'
     model_path = f'{drive_path}nsynth-models/{args.model_name}'
 
     # Select GPU for runtime if available
