@@ -14,7 +14,7 @@ from Confusion_matrix_graphic import num_to_instrument
 def main():
     parser = argparse.ArgumentParser(description='Test the individual instrument identification model')
     parser.add_argument('-f')  # Required for argument parser to work in Colab
-    parser.add_argument('--test_folder', type=str, default='small_audio/')
+    parser.add_argument('--test_folder', type=str, default='audio/')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--model_name', type=str,  default='billy_joel_cnn')
     parser.add_argument('--model_type', type=str, default='Basic_4_Layer_CNN')

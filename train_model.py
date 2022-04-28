@@ -7,7 +7,6 @@ from copy import deepcopy
 from create_dataset import create_dataset
 from Models import Models
 from plot_model_results import plot_model_results
-import matplotlib.pyplot as plt
 
 
 def main():
@@ -22,7 +21,6 @@ def main():
     parser.add_argument('--status_interval', type=int, default=1)
     parser.add_argument('--model_name', type=str, default='unspecified')
     parser.add_argument('--save_model', type=str, default='False')
-    parser.add_argument('--shuffle', type=str, default='True')
     parser.add_argument('--label_smoothing_factor', type=float, default=0.0)
     parser.add_argument('--weight_decay', type=float, default=0.0)
     parser.add_argument('--optimizer', type=str, default='SGD')
@@ -36,15 +34,10 @@ def main():
     else:
         save_trained_model = False
 
-    if args.shuffle.lower() == 'true':
-        shuffle = True
-    else:
-        shuffle = False
-
     drive_path = '/content/drive/MyDrive/DL_data/'
     json_path_tng = f'{drive_path}nsynth-train/examples.json'
     json_path_val = f'{drive_path}nsynth-valid/examples.json'
-    audio_input_path_tng = f'{drive_path}nsynth-train/{args.train_folder}'
+    audio_input_path_tng = f'/content/{args.train_folder}'
     audio_input_path_val = f'{drive_path}nsynth-valid/{args.val_folder}'
 
     # Select GPU for runtime if available
