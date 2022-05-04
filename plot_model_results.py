@@ -1,3 +1,5 @@
+'''Module that plots the progression of loss and accuracy values during training'''
+
 import matplotlib.pyplot as plt
 import torch
 import random
