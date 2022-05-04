@@ -1,3 +1,6 @@
+'''Module run once to create a subset of the full dataset. Calls the SmallTrainSet class to get
+a list of audio files, then copies those files into a new directory.'''
+
 import torch
 from datetime import datetime
 import shutil
