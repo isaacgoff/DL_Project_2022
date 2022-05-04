@@ -1,3 +1,5 @@
+'''Module containing a class that instantiates the chosen model. Also defines all models'''
+
 from torch import nn
 from torch.nn.functional import softmax
 import torchvision.models as models
