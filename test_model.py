@@ -1,3 +1,5 @@
+'''Module used to load a saved model and perform inference on a test dataset. Generates an accuracy score and confusion matrix.'''
+
 import argparse
 import torch
 from datetime import datetime
