@@ -1,3 +1,5 @@
+'''Module called by both training and testing code at runtime to generate spectrograms from a list of audio files.'''
+
 import os
 import torch
 import librosa
