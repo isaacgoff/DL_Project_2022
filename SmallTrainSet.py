@@ -2,7 +2,8 @@ import json
 
 
 class SmallTrainSet:
-
+'''Class that samples the full training set to create a subset of specified size with the same 
+class distribution as the original dataset. Output is a list of audio file names.'''
     def __init__(self, dataset_size, path):
         self.dataset_size = dataset_size
         self.path = path
