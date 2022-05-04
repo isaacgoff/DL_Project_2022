@@ -1,3 +1,6 @@
+'''Module that instantiates a deep learning model using the Models class and trains the model for the 
+specified number of epochs. Model weights are saved after the epoch with the highest validation accuracy.'''
+
 import argparse
 import torch
 from torch import nn
